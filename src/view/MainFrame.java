@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame
 {
@@ -10,13 +12,10 @@ public class MainFrame extends JFrame
 
 
     private JPanel mainPanel;
-    private JPanel insertCard;
-    private JTextField textField1;
-    private JLabel cardNumberLabel;
-    private JPanel cardPanel;
-    private JPanel insertMoney;
-    private JTextField textField2;
-    private JLabel wonLabel;
+    private JPanel MenuView;
+    private JButton depositButton;
+    private JButton withdrawButton;
+    private JButton transferButton;
 
 
     //생성자
@@ -25,6 +24,18 @@ public class MainFrame extends JFrame
         add(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(d);
+        ActionListener listener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                //TODO: 버튼 누르는대로 view 바꿔주기
+                if(e.getSource().equals(depositButton)) changeView("insert");
+            }
+        };
+        depositButton.addActionListener(listener);
+        withdrawButton.addActionListener(listener);
+        transferButton.addActionListener(listener);
     }
 
     //상황에 맞는 패널로 띄워준다.

@@ -1,11 +1,25 @@
 package view;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MenuView extends JPanel
 {
-    private JPanel panel1;
-    private JButton 출금Button;
-    private JButton 송금Button;
-    private JButton 예금Button;
+    private JPanel buttonPanel;
+    private JButton withdrawButton;
+    private JButton transferButton;
+    private JButton depositButton;
+
+    public MenuView()
+    {
+        depositButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+
+            }
+        });
+    }
 }

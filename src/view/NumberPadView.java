@@ -1,6 +1,8 @@
 package view;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class NumberPadView extends JPanel
 {
@@ -20,15 +22,78 @@ public class NumberPadView extends JPanel
     private JButton manButton;
     private JButton resetButton;
 
+
+
+    private static JTextField textField;           //다른 패널에 있는 textField(금액, 카드번호 등)
+    private JPasswordField passwordField;   //비밀번호 입력창.
+
+
     public NumberPadView()
     {
         //처음 생성시 만원버튼 안 보이게
         showManButton(false);
+        ActionListener numListener = new ActionListener()
+        {
+
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                //누른 버튼 번호에 맞는 숫자(string) 리턴
+                Object temp = e.getSource();
+                if(temp.equals(a0Button)) setNumber(textField, buttonValue("0"));
+                else if(temp.equals(a1Button)) setNumber(textField, buttonValue("1"));
+                else if(temp.equals(a2Button)) setNumber(textField, buttonValue("2"));
+                else if(temp.equals(a3Button)) setNumber(textField, buttonValue("3"));
+                else if(temp.equals(a4Button)) setNumber(textField, buttonValue("4"));
+                else if(temp.equals(a5Button)) setNumber(textField, buttonValue("5"));
+                else if(temp.equals(a6Button)) setNumber(textField, buttonValue("6"));
+                else if(temp.equals(a7Button)) setNumber(textField, buttonValue("7"));
+                else if(temp.equals(a8Button)) setNumber(textField, buttonValue("8"));
+                else if(temp.equals(a9Button)) setNumber(textField, buttonValue("9"));
+            }
+        };
+        a1Button.addActionListener(numListener);
+        a2Button.addActionListener(numListener);
+        a3Button.addActionListener(numListener);
+        a4Button.addActionListener(numListener);
+        a5Button.addActionListener(numListener);
+        a6Button.addActionListener(numListener);
+        a7Button.addActionListener(numListener);
+        a8Button.addActionListener(numListener);
+        a9Button.addActionListener(numListener);
+        a0Button.addActionListener(numListener);
+
     }
 
     public void showManButton(boolean b)
     {
         manButton.setEnabled(b);
         manButton.setVisible(b);
+    }
+
+
+    //버튼 누른 숫자 리턴 (string으로)
+    public String buttonValue(String bn)
+    {
+        return bn;
+    }
+
+    //textField에 입력한 숫자 더해서 표시해주기
+    public void setNumber(JTextField textField, String val)
+    {
+        String temp = textField.getText();
+        temp += val;
+        textField.setText(temp);
+    }
+
+
+    public JTextField getTextField()
+    {
+        return textField;
+    }
+
+    public static void setTextField(JTextField textField)
+    {
+        textField = textField;
     }
 }

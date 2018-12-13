@@ -8,6 +8,8 @@ public class ViewMain
         mf.setVisible(true);
 
         //원하는 화면카드 띄워주기
-        mf.changeView("money");
+        mf.changeView("main");
+//        mf.changeView("insert");
+//        mf.changeView("money");
     }
 }
