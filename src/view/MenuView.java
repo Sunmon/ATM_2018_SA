@@ -1,3 +1,5 @@
+//FIXME: MenuView안씀!!! 삭제해도 됌!!
+
 package view;
 
 import javax.swing.*;

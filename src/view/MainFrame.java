@@ -21,8 +21,9 @@ public class MainFrame extends JFrame
     private InsertCardView insertCardPanel;
     private JLabel whatToDoLabel;
     private InsertMoneyView insertMoneyPanel;
-
-
+    private JPanel insertTransferView;
+    private InsertCardView insertTransferPanel;
+    private JButton backTransferButton;
 
     private String cardNum;     //model에 연결하기 전 GUI에서 임시로 카드번호 저장
 
@@ -38,26 +39,40 @@ public class MainFrame extends JFrame
             instance = new MainFrame();
         return instance;
     }
+
+
     public void init()
     {
         add(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(d);
+
+        // insertCardView 클래스 쓰일때 입력받는 번호가 내꺼인지 다른사람꺼인지 구분해주기 위한 모드 설정
+        insertCardPanel.setMode("mine");
+        insertTransferPanel.setMode("other");
+
+
+        //Action listener 설정
         ActionListener listener = new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                insertCardPanel.setNumRelated();
+                insertTransferPanel.setNumRelated();
+                insertMoneyPanel.setNumRelated();
                 changeView("insert");
             }
         };
 
+        //뒤로가기 버튼
         ActionListener backListener = new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
                 insertCardPanel.getCreditTextField().setText("");
+                insertTransferPanel.getCreditTextField().setText("");
                 changeView("main");
             }
         };
@@ -73,9 +88,8 @@ public class MainFrame extends JFrame
 
     }
 
-    //TODO: 메뉴 고른거 저장해두기 -> 나중에 패널들 띄울때 사용하게.
     //상황에 맞는 패널로 띄워준다.
-    //cardName : main, num, insert, money
+    //cardName : main, insert, money, transfer 중 하나
     public void changeView(String cardName)
     {
         CardLayout c = (CardLayout)mainPanel.getLayout();
@@ -83,17 +97,15 @@ public class MainFrame extends JFrame
     }
 
 
-    //NOTE: 모델에 연결 전. GUI상으로 임시로 저장하는 카드 번호.
+    //모델에 연결 전. GUI상으로 임시로 저장하는 카드 번호.
     public String getCardNum()
     {
         return cardNum;
     }
-
     public void setCardNum(String cardNum)
     {
         this.cardNum = cardNum;
     }
-
     public JPanel getMainPanel()
     {
         return mainPanel;
