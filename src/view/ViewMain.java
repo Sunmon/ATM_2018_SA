@@ -4,7 +4,7 @@ public class ViewMain
 {
     public static void main(String[] args)
     {
-        MainFrame mf = new MainFrame();
+        MainFrame mf = MainFrame.getInstance();
         mf.setVisible(true);
 
         //answers는 parameter로 들어오는 입력값
