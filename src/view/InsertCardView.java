@@ -8,107 +8,34 @@ import java.awt.event.ActionListener;
 public class InsertCardView extends JPanel
 {
     private JPanel panel1;
+
+
+
     private JTextField creditTextField;
     private JPanel creditCardPanel;
     private JLabel creditCardNumberLabel;
-    private JButton a1Button;
-    private JButton a2Button;
-    private JButton a3Button;
-    private JButton a4Button;
-    private JButton a5Button;
-    private JButton a6Button;
-    private JButton a7Button;
-    private JButton a8Button;
-    private JButton a9Button;
-    private JButton deleteButton;
-    private JButton resetButton;
-    private JButton okButton;
-    private JButton a0Button;
+    private NumberPadView numberPadPanel;
 
-
-
+    private static InsertCardView instance;
 
     //TODO: OK버튼 누르면 다음 화면으로 넘어가게 하기
     public InsertCardView()
     {
-
-        ActionListener listener = new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                addToText(e.getSource(), creditTextField);
-            }
-        };
-
-        //add button listener
-        a1Button.addActionListener(listener);
-        a2Button.addActionListener(listener);
-        a3Button.addActionListener(listener);
-        a4Button.addActionListener(listener);
-        a5Button.addActionListener(listener);
-        a6Button.addActionListener(listener);
-        a7Button.addActionListener(listener);
-        a8Button.addActionListener(listener);
-        a9Button.addActionListener(listener);
-        a0Button.addActionListener(listener);
-        deleteButton.addActionListener(listener);
-        resetButton.addActionListener(listener);
-        okButton.addActionListener(listener);
+        instance = this;
+        numberPadPanel.setRelationPanel(this);
     }
 
-
-    //버튼 눌렀을때 textField에 누른 숫자대로 뜨게 하는 메소드
-    public void addToText(Object o, JTextField textField)
+    public static InsertCardView getInstance()
     {
-
-        //누른 버튼 정보를 but에 숫자로 저장
-        Object[] buttons = new Object[]
-                {a0Button, a1Button, a2Button, a3Button, a4Button, a5Button, a6Button,
-                a7Button, a8Button, a9Button, deleteButton, okButton, resetButton};
-
-        int but = 0;
-        for(Object b: buttons)
-        {
-            if(o.equals(b)) break;
-            but++;
-        }
-
-
-        //누른 버튼에 맞게 textField 내용을 갱신
-        String temp = textField.getText();
-        switch(but)
-        {
-            case 10:    //delete button
-                if(temp.length() == 0) break;
-                temp = temp.substring(0, temp.length()-1);
-                break;
-            case 11:    //OK button
-                //NOTE: 임의로 cardNum에 저장해둠. 나중에 model과 합치면 수정할 부분!
-                MainFrame.getInstance().setCardNum(textField.getText());
-                MainFrame.getInstance().changeView("money");
-            return;
-            case 12:    //reset button
-                temp = "";
-                break;
-            default:    //number buttons
-                temp+= Integer.toString(but);
-                break;
-        }
-        textField.setText(temp);
+        if ( instance == null )
+            instance = new InsertCardView();
+        return instance;
     }
-
-
-
 
     public JTextField getCreditTextField()
     {
         return creditTextField;
     }
 
-    public void setCreditTextField(JTextField creditTextField)
-    {
-        this.creditTextField = creditTextField;
-    }
 
 }

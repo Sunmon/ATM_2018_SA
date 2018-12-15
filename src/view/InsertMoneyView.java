@@ -6,8 +6,6 @@ public class InsertMoneyView extends JPanel
 {
     private JPanel panel1;
     private JLabel wonLabel;
-
-
     private JTextField moneyTextField;
     private NumberPadView numberPadPanel;
 

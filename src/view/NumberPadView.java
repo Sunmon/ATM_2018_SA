@@ -4,6 +4,8 @@
 
 package view;
 
+import sun.applet.Main;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,13 +33,6 @@ public class NumberPadView extends JPanel
     private JTextField textField;           //다른 패널에 있는 textField(금액, 카드번호 등)
     private JPasswordField passwordField;   //비밀번호 입력창.
 
-
-    public void setRelationPanel(JPanel pan)
-    {
-        if(pan.equals(testInertView.getInstance())) textField = testInertView.getInstance().getTextField1();
-        else if(pan.equals(InsertMoneyView.getInstance())) textField = InsertMoneyView.getInstance().getMoneyTextField();
-        System.out.println("textFiled");
-    }
 
 
     public NumberPadView()
@@ -82,6 +77,25 @@ public class NumberPadView extends JPanel
 
 
 
+    //TODO: OK버튼 눌렀을때 기존 화면 따라 다른 동작하게끔.
+    //TODO: 화면따라 만원 버튼 보이기/안보이기
+
+
+
+
+
+
+
+
+    public void setRelationPanel(JPanel pan)
+    {
+        if(pan.equals(InsertCardView.getInstance())) textField = InsertCardView.getInstance().getCreditTextField();
+        else if(pan.equals(InsertMoneyView.getInstance())) textField = InsertMoneyView.getInstance().getMoneyTextField();
+        System.out.println("textFiled");
+    }
+
+
+
     //버튼 눌렀을때 textField에 누른 숫자대로 뜨게 하는 메소드
     public void addToText(Object o, JTextField textField)
     {
@@ -108,9 +122,10 @@ public class NumberPadView extends JPanel
                 temp = temp.substring(0, temp.length()-1);
                 break;
             case 11:    //OK button
-                //NOTE: 임의로 cardNum에 저장해둠. 나중에 model과 합치면 수정할 부분!
+                //NOTE: textField카드번호 내용들 임의로 cardNum에 저장해둠. 나중에 model과 합치면 수정할 부분!
                 MainFrame.getInstance().setCardNum(textField.getText());
                 MainFrame.getInstance().changeView("money");
+//                System.out.println(MainFrame.getInstance().getCardNum());
                 return;
             case 12:    //reset button
                 temp = "";
