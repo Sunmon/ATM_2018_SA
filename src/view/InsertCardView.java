@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 public class InsertCardView extends JPanel
 {
     private JPanel panel1;
+
+
+
     private JTextField creditTextField;
     private JPanel creditCardPanel;
     private JLabel creditCardNumberLabel;
@@ -32,7 +35,6 @@ public class InsertCardView extends JPanel
     //TODO: OK버튼 누르면 다음 화면으로 넘어가게 하기
     public InsertCardView()
     {
-
 
         ActionListener listener = new ActionListener()
         {
@@ -82,7 +84,8 @@ public class InsertCardView extends JPanel
                 if(temp.length() == 0) break;
                 temp = temp.substring(0, temp.length()-1);
                 break;
-            case 11:    //ok
+            case 11:    MainFrame.getInstance().changeView("money");
+            return;
             case 12:    //reset
                 temp = "";
                 break;
@@ -95,5 +98,15 @@ public class InsertCardView extends JPanel
 
 
 
+
+    public JTextField getCreditTextField()
+    {
+        return creditTextField;
+    }
+
+    public void setCreditTextField(JTextField creditTextField)
+    {
+        this.creditTextField = creditTextField;
+    }
 
 }
