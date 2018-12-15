@@ -3,7 +3,6 @@
 
 
 package view;
-
 import sun.applet.Main;
 
 import javax.swing.*;
@@ -27,13 +26,12 @@ public class NumberPadView extends JPanel
     private JButton a0Button;
     private JButton manButton;
     private JButton resetButton;
-
-
-
     private JTextField textField;           //다른 패널에 있는 textField(금액, 카드번호 등)
     private JPasswordField passwordField;   //비밀번호 입력창.
 
 
+
+    private JPanel relatedPanel;    //numberPad와 연결되어있는 다른 패널 확인용 (insert, money..)
 
     public NumberPadView()
     {
@@ -74,26 +72,47 @@ public class NumberPadView extends JPanel
         okButton.addActionListener(listener);
     }
 
-
-
-
     //TODO: OK버튼 눌렀을때 기존 화면 따라 다른 동작하게끔.
     //TODO: 화면따라 만원 버튼 보이기/안보이기
 
 
-
-
-
-
-
-
     public void setRelationPanel(JPanel pan)
     {
+        setRelationPanel(pan);
+        initRelationPanel(pan);
+
         if(pan.equals(InsertCardView.getInstance())) textField = InsertCardView.getInstance().getCreditTextField();
         else if(pan.equals(InsertMoneyView.getInstance())) textField = InsertMoneyView.getInstance().getMoneyTextField();
         System.out.println("textFiled");
     }
 
+
+
+    //TODO: 연관된 panel 따라서 textLabel, OK 버튼 등등에 대한 세부 설정
+    //TODO: 만약에 송금할때 InsertCardView면 그때 또한번 new InsertCardView만들어서 쓰자.
+
+    private void initRelationPanel(JPanel pan)
+    {
+        if(pan.equals(InsertCardView.getInstance()))
+        {
+            textField = InsertCardView.getInstance().getCreditTextField();
+            okButton
+        }
+
+    }
+
+    //OK 버튼 눌렀을때 다음 화면 넘어가는것 설정
+    private void changeView(JPanel pan)
+    {
+        if(pan.equals(InsertCardView.getInstance().getCreditTextField()))
+        {
+            MainFrame.getInstance().setCardNum(textField.getText());
+            MainFrame.getInstance().changeView("money");
+            return;
+        }
+
+        else if(pan.equals(InsertMoneyView.getInstance())) textField = InsertMoneyView.getInstance().getMoneyTextField())
+    }
 
 
     //버튼 눌렀을때 textField에 누른 숫자대로 뜨게 하는 메소드
@@ -145,5 +164,15 @@ public class NumberPadView extends JPanel
     public static void setTextField(JTextField textField)
     {
         textField = textField;
+    }
+
+    public JPanel getRelatedPanel()
+    {
+        return relatedPanel;
+    }
+
+    public void setRelatedPanel(JPanel relatedPanel)
+    {
+        this.relatedPanel = relatedPanel;
     }
 }

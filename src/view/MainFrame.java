@@ -23,6 +23,7 @@ public class MainFrame extends JFrame
     private InsertMoneyView insertMoneyPanel;
 
 
+
     private String cardNum;     //model에 연결하기 전 GUI에서 임시로 카드번호 저장
 
     //싱글톤 이용한 생성자.
@@ -72,6 +73,7 @@ public class MainFrame extends JFrame
 
     }
 
+    //TODO: 메뉴 고른거 저장해두기 -> 나중에 패널들 띄울때 사용하게.
     //상황에 맞는 패널로 띄워준다.
     //cardName : main, num, insert, money
     public void changeView(String cardName)
