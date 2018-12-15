@@ -31,7 +31,6 @@ public class MainFrame extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                //TODO: 버튼 누르는대로 view 바꿔주기
                 changeView("insert");
             }
         };

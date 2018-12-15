@@ -1,3 +1,7 @@
+//TODO: NumberPadView 클래스 안 쓴다!!!!!!!!!!!!!!!!!
+
+
+
 package view;
 
 import javax.swing.*;
@@ -40,16 +44,16 @@ public class NumberPadView extends JPanel
             {
                 //누른 버튼 번호에 맞는 숫자(string) 리턴
                 Object temp = e.getSource();
-                if(temp.equals(a0Button)) setNumber(textField, buttonValue("0"));
-                else if(temp.equals(a1Button)) setNumber(textField, buttonValue("1"));
-                else if(temp.equals(a2Button)) setNumber(textField, buttonValue("2"));
-                else if(temp.equals(a3Button)) setNumber(textField, buttonValue("3"));
-                else if(temp.equals(a4Button)) setNumber(textField, buttonValue("4"));
-                else if(temp.equals(a5Button)) setNumber(textField, buttonValue("5"));
-                else if(temp.equals(a6Button)) setNumber(textField, buttonValue("6"));
-                else if(temp.equals(a7Button)) setNumber(textField, buttonValue("7"));
-                else if(temp.equals(a8Button)) setNumber(textField, buttonValue("8"));
-                else if(temp.equals(a9Button)) setNumber(textField, buttonValue("9"));
+                if(temp.equals(a0Button)) setNumber(buttonValue("0"));
+                else if(temp.equals(a1Button)) setNumber(buttonValue("1"));
+                else if(temp.equals(a2Button)) setNumber(buttonValue("2"));
+                else if(temp.equals(a3Button)) setNumber(buttonValue("3"));
+                else if(temp.equals(a4Button)) setNumber(buttonValue("4"));
+                else if(temp.equals(a5Button)) setNumber(buttonValue("5"));
+                else if(temp.equals(a6Button)) setNumber(buttonValue("6"));
+                else if(temp.equals(a7Button)) setNumber(buttonValue("7"));
+                else if(temp.equals(a8Button)) setNumber(buttonValue("8"));
+                else if(temp.equals(a9Button)) setNumber(buttonValue("9"));
             }
         };
         a1Button.addActionListener(numListener);
@@ -79,7 +83,7 @@ public class NumberPadView extends JPanel
     }
 
     //textField에 입력한 숫자 더해서 표시해주기
-    public void setNumber(JTextField textField, String val)
+    public void setNumber(String val)
     {
         String temp = textField.getText();
         temp += val;
