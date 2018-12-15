@@ -21,8 +21,7 @@ public class MainFrame extends JFrame
     private InsertCardView insertCardPanel;
     private JLabel whatToDoLabel;
     private InsertMoneyView insertMoneyPanel;
-
-
+    private JPanel testPanel;
 
 
     private String cardNum;     //model에 연결하기 전 GUI에서 임시로 카드번호 저장
