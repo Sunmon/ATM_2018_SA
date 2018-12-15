@@ -6,19 +6,31 @@ public class InsertMoneyView extends JPanel
 {
     private JPanel panel1;
     private JLabel wonLabel;
+
+
     private JTextField moneyTextField;
-    private JButton a1Button;
-    private JButton a2Button;
-    private JButton a3Button;
-    private JButton a4Button;
-    private JButton a5Button;
-    private JButton a6Button;
-    private JButton a7Button;
-    private JButton a8Button;
-    private JButton a9Button;
-    private JButton a0Button;
-    private JButton a0000Button;
-    private JButton deleteButton;
-    private JButton resetButton;
-    private JButton okButton;
+    private NumberPadView numberPadPanel;
+
+    private static InsertMoneyView instance;
+    //TODO: moneyView도 testView처럼 numPad 이용해서 만들기!
+
+    // 생성자. 다른 클래스에서 instance 로 접근할 수 있게 설정.
+    public InsertMoneyView()
+    {
+        instance = this;
+        numberPadPanel.setRelationPanel(this);
+    }
+
+    public static InsertMoneyView getInstance()
+    {
+        if ( instance == null )
+            instance = new InsertMoneyView();
+        return instance;
+    }
+
+    public JTextField getMoneyTextField()
+    {
+        return moneyTextField;
+    }
+
 }

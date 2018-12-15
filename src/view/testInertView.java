@@ -18,6 +18,8 @@ public class testInertView extends JPanel
     public testInertView()
     {
         instance = this;
+        numberPadPanel.setRelationPanel(this);
+
     }
 
     public static testInertView getInstance()

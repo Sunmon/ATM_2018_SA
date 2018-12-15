@@ -35,6 +35,7 @@ public class NumberPadView extends JPanel
     public void setRelationPanel(JPanel pan)
     {
         if(pan.equals(testInertView.getInstance())) textField = testInertView.getInstance().getTextField1();
+        else if(pan.equals(InsertMoneyView.getInstance())) textField = InsertMoneyView.getInstance().getMoneyTextField();
         System.out.println("textFiled");
     }
 
@@ -53,7 +54,6 @@ public class NumberPadView extends JPanel
 
     private void init()
     {
-        setRelationPanel(testInertView.getInstance());
         ActionListener listener = new ActionListener()
         {
             @Override
