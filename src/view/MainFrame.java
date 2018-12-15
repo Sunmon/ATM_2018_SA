@@ -22,6 +22,7 @@ public class MainFrame extends JFrame
     private JLabel whatToDoLabel;
     private InsertMoneyView insertMoneyPanel;
     private JPanel testPanel;
+    private testInertView testView;
 
 
     private String cardNum;     //model에 연결하기 전 GUI에서 임시로 카드번호 저장
@@ -48,7 +49,9 @@ public class MainFrame extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                changeView("insert");
+                //FIXME: 임시로 test확인중
+//                changeView("insert");
+                changeView("test");
             }
         };
 

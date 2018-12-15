@@ -28,45 +28,20 @@ public class NumberPadView extends JPanel
 
 
 
-    private static JTextField textField;           //다른 패널에 있는 textField(금액, 카드번호 등)
+    private JTextField textField;           //다른 패널에 있는 textField(금액, 카드번호 등)
     private JPasswordField passwordField;   //비밀번호 입력창.
+
+
+    public void setRelationPanel(JPanel pan)
+    {
+        if(pan.equals(testInertView.getInstance())) textField = testInertView.getInstance().getTextField1();
+        System.out.println("textFiled");
+    }
 
 
     public NumberPadView()
     {
-        //처음 생성시 만원버튼 안 보이게
-        showManButton(false);
-        ActionListener numListener = new ActionListener()
-        {
-
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                //누른 버튼 번호에 맞는 숫자(string) 리턴
-                Object temp = e.getSource();
-                if(temp.equals(a0Button)) setNumber(buttonValue("0"));
-                else if(temp.equals(a1Button)) setNumber(buttonValue("1"));
-                else if(temp.equals(a2Button)) setNumber(buttonValue("2"));
-                else if(temp.equals(a3Button)) setNumber(buttonValue("3"));
-                else if(temp.equals(a4Button)) setNumber(buttonValue("4"));
-                else if(temp.equals(a5Button)) setNumber(buttonValue("5"));
-                else if(temp.equals(a6Button)) setNumber(buttonValue("6"));
-                else if(temp.equals(a7Button)) setNumber(buttonValue("7"));
-                else if(temp.equals(a8Button)) setNumber(buttonValue("8"));
-                else if(temp.equals(a9Button)) setNumber(buttonValue("9"));
-            }
-        };
-        a1Button.addActionListener(numListener);
-        a2Button.addActionListener(numListener);
-        a3Button.addActionListener(numListener);
-        a4Button.addActionListener(numListener);
-        a5Button.addActionListener(numListener);
-        a6Button.addActionListener(numListener);
-        a7Button.addActionListener(numListener);
-        a8Button.addActionListener(numListener);
-        a9Button.addActionListener(numListener);
-        a0Button.addActionListener(numListener);
-
+      init();
     }
 
     public void showManButton(boolean b)
@@ -76,20 +51,76 @@ public class NumberPadView extends JPanel
     }
 
 
-    //버튼 누른 숫자 리턴 (string으로)
-    public String buttonValue(String bn)
+    private void init()
     {
-        return bn;
+        setRelationPanel(testInertView.getInstance());
+        ActionListener listener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                addToText(e.getSource(), textField);
+            }
+        };
+
+        //add button listener
+        a1Button.addActionListener(listener);
+        a2Button.addActionListener(listener);
+        a3Button.addActionListener(listener);
+        a4Button.addActionListener(listener);
+        a5Button.addActionListener(listener);
+        a6Button.addActionListener(listener);
+        a7Button.addActionListener(listener);
+        a8Button.addActionListener(listener);
+        a9Button.addActionListener(listener);
+        a0Button.addActionListener(listener);
+        deleteButton.addActionListener(listener);
+        resetButton.addActionListener(listener);
+        okButton.addActionListener(listener);
     }
 
-    //textField에 입력한 숫자 더해서 표시해주기
-    public void setNumber(String val)
+
+
+
+    //버튼 눌렀을때 textField에 누른 숫자대로 뜨게 하는 메소드
+    public void addToText(Object o, JTextField textField)
     {
+
+        //누른 버튼 정보를 but에 숫자로 저장
+        Object[] buttons = new Object[]
+                {a0Button, a1Button, a2Button, a3Button, a4Button, a5Button, a6Button,
+                        a7Button, a8Button, a9Button, deleteButton, okButton, resetButton};
+
+        int but = 0;
+        for(Object b: buttons)
+        {
+            if(o.equals(b)) break;
+            but++;
+        }
+
+
+        //누른 버튼에 맞게 textField 내용을 갱신
         String temp = textField.getText();
-        temp += val;
+        switch(but)
+        {
+            case 10:    //delete button
+                if(temp.length() == 0) break;
+                temp = temp.substring(0, temp.length()-1);
+                break;
+            case 11:    //OK button
+                //NOTE: 임의로 cardNum에 저장해둠. 나중에 model과 합치면 수정할 부분!
+                MainFrame.getInstance().setCardNum(textField.getText());
+                MainFrame.getInstance().changeView("money");
+                return;
+            case 12:    //reset button
+                temp = "";
+                break;
+            default:    //number buttons
+                temp+= Integer.toString(but);
+                break;
+        }
         textField.setText(temp);
     }
-
 
     public JTextField getTextField()
     {
