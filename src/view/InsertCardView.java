@@ -19,6 +19,7 @@ public class InsertCardView extends JPanel
     {
         instance = this;
         System.out.println(mode);
+        setNumRelated();
     }
 
     public static InsertCardView getInstance()
