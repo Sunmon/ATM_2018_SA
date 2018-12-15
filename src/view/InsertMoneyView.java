@@ -16,7 +16,7 @@ public class InsertMoneyView extends JPanel
     public InsertMoneyView()
     {
         instance = this;
-        setNumRelated();
+        numberPadPanel.setRelationPanel(this);
     }
 
     public static InsertMoneyView getInstance()
@@ -26,11 +26,6 @@ public class InsertMoneyView extends JPanel
         return instance;
     }
 
-    public void setNumRelated()
-    {
-        numberPadPanel.setRelationPanel(this);
-
-    }
     public JTextField getMoneyTextField()
     {
         return moneyTextField;

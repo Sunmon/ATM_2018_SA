@@ -47,9 +47,7 @@ public class MainFrame extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(d);
 
-        // insertCardView 클래스 쓰일때 입력받는 번호가 내꺼인지 다른사람꺼인지 구분해주기 위한 모드 설정
-        insertCardPanel.setMode("mine");
-        insertTransferPanel.setMode("other");
+
 
 
         //Action listener 설정
@@ -58,9 +56,6 @@ public class MainFrame extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                insertCardPanel.setNumRelated();
-                insertTransferPanel.setNumRelated();
-                insertMoneyPanel.setNumRelated();
                 changeView("insert");
             }
         };

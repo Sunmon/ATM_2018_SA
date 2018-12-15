@@ -3,7 +3,6 @@
 
 
 package view;
-import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -26,16 +25,25 @@ public class NumberPadView extends JPanel
     private JButton a0Button;
     private JButton manButton;
     private JButton resetButton;
+
+
+
     private JTextField textField;           //다른 패널에 있는 textField(금액, 카드번호 등)
     private JPasswordField passwordField;   //비밀번호 입력창.
 
 
+    public void setRelationPanel(JPanel pan)
+    {
+//        if(pan.equals(testInertView.getInstance())) textField = testInertView.getInstance().getTextField1();
+        if(pan.equals(InsertCardView.getInstance())) textField = InsertCardView.getInstance().getCreditTextField();
+        else if(pan.equals(InsertMoneyView.getInstance())) textField = InsertMoneyView.getInstance().getMoneyTextField();
+        System.out.println("textFiled");
+    }
 
-    private JPanel relatedPanel;    //numberPad와 연결되어있는 다른 패널 확인용 (insert, money..)
 
     public NumberPadView()
     {
-      init();
+        init();
     }
 
     public void showManButton(boolean b)
@@ -70,50 +78,9 @@ public class NumberPadView extends JPanel
         deleteButton.addActionListener(listener);
         resetButton.addActionListener(listener);
         okButton.addActionListener(listener);
-
-    }
-
-    //TODO: OK버튼 눌렀을때 기존 화면 따라 다른 동작하게끔.
-    //TODO: 화면따라 만원 버튼 보이기/안보이기
-
-
-    public void setRelationPanel(JPanel pan)
-    {
-        this.relatedPanel = pan;
-        initRelationPanel(pan);
-
-        if(pan.equals(InsertCardView.getInstance())) textField = InsertCardView.getInstance().getCreditTextField();
-        else if(pan.equals(InsertMoneyView.getInstance())) textField = InsertMoneyView.getInstance().getMoneyTextField();
-        System.out.println("textFiled");
     }
 
 
-
-    //TODO: 연관된 panel 따라서 textLabel, OK 버튼 등등에 대한 세부 설정
-    //TODO: 만약에 송금할때 InsertCardView면 그때 또한번 new InsertCardView만들어서 쓰자.
-
-    private void initRelationPanel(JPanel pan)
-    {
-        if(pan.equals(InsertCardView.getInstance()))
-        {
-            textField = InsertCardView.getInstance().getCreditTextField();
-//            okButton
-        }
-
-    }
-
-    //OK 버튼 눌렀을때 다음 화면 넘어가는것 설정
-    private void changeView(JPanel pan)
-    {
-        if(pan.equals(InsertCardView.getInstance().getCreditTextField()))
-        {
-            MainFrame.getInstance().setCardNum(textField.getText());
-            MainFrame.getInstance().changeView("money");
-            return;
-        }
-
-        else if(pan.equals(InsertMoneyView.getInstance())) textField = InsertMoneyView.getInstance().getMoneyTextField();
-    }
 
 
     //버튼 눌렀을때 textField에 누른 숫자대로 뜨게 하는 메소드
@@ -142,10 +109,9 @@ public class NumberPadView extends JPanel
                 temp = temp.substring(0, temp.length()-1);
                 break;
             case 11:    //OK button
-                //NOTE: textField카드번호 내용들 임의로 cardNum에 저장해둠. 나중에 model과 합치면 수정할 부분!
+                //NOTE: 임의로 cardNum에 저장해둠. 나중에 model과 합치면 수정할 부분!
                 MainFrame.getInstance().setCardNum(textField.getText());
                 MainFrame.getInstance().changeView("money");
-//                System.out.println(MainFrame.getInstance().getCardNum());
                 return;
             case 12:    //reset button
                 temp = "";
@@ -166,14 +132,4 @@ public class NumberPadView extends JPanel
     {
         textField = textField;
     }
-
-    public JPanel getRelatedPanel()
-    {
-        return relatedPanel;
-    }
-
-  /*  public void setRelatedPanel(JPanel relatedPanel)
-    {
-        this.relatedPanel = relatedPanel;
-    }*/
 }
