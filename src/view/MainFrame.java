@@ -48,14 +48,20 @@ public class MainFrame extends JFrame
         setSize(d);
 
 
-
-
         //Action listener 설정
         ActionListener listener = new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                if(e.getSource().equals(depositButton))
+                {
+                    insertCardPanel.setNextMode("money");
+//                    insertCardPanel.getNumberPadPanel().setRelatedPanel(insertCardPanel, insertCardPanel.getCreditTextField());
+                }
+                if(e.getSource().equals(withdrawButton)) insertCardPanel.setNextMode("password");
+                if(e.getSource().equals(transferButton)) insertCardPanel.setNextMode("transfer");
+                System.out.println("insertCardPanel: + "+ insertCardPanel.getNextMode());
                 changeView("insert");
             }
         };
@@ -89,6 +95,8 @@ public class MainFrame extends JFrame
     {
         CardLayout c = (CardLayout)mainPanel.getLayout();
         c.show(mainPanel, cardName);
+
+
     }
 
 

@@ -16,7 +16,7 @@ public class InsertMoneyView extends JPanel
     public InsertMoneyView()
     {
         instance = this;
-        numberPadPanel.setRelationPanel(this);
+        numberPadPanel.setRelatedPanel(this, moneyTextField);
     }
 
     public static InsertMoneyView getInstance()

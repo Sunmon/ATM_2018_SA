@@ -31,14 +31,26 @@ public class NumberPadView extends JPanel
     private JTextField textField;           //다른 패널에 있는 textField(금액, 카드번호 등)
     private JPasswordField passwordField;   //비밀번호 입력창.
 
-
-    public void setRelationPanel(JPanel pan)
+    IView relatedPanel;
+//    JPanel relatedPanel;
+/*
+    public void setRelatedPanel(JPanel pan, JTextField jtf)
     {
 //        if(pan.equals(testInertView.getInstance())) textField = testInertView.getInstance().getTextField1();
-        if(pan.equals(InsertCardView.getInstance())) textField = InsertCardView.getInstance().getCreditTextField();
-        else if(pan.equals(InsertMoneyView.getInstance())) textField = InsertMoneyView.getInstance().getMoneyTextField();
+//        if(pan.equals(InsertCardView.getInstance())) textField = InsertCardView.getInstance().getCreditTextField();
+        relatedPanel = pan;
+        textField = jtf;
+
+        if(pan.equals(InsertMoneyView.getInstance())) textField = InsertMoneyView.getInstance().getMoneyTextField();
         System.out.println("textFiled");
-    }
+    }*/
+
+public void setRelatedPanel(IView pan, JTextField jtf)
+{
+    relatedPanel = pan;
+    textField = jtf;
+
+}
 
 
     public NumberPadView()
@@ -110,6 +122,9 @@ public class NumberPadView extends JPanel
                 break;
             case 11:    //OK button
                 //NOTE: 임의로 cardNum에 저장해둠. 나중에 model과 합치면 수정할 부분!
+//                System.out.println("okbutton pressed: " +InsertCardView.getInstance().getNextMode());
+                System.out.println("okbutton pressed: " + relatedPanel.getNextMode());
+
                 MainFrame.getInstance().setCardNum(textField.getText());
                 MainFrame.getInstance().changeView("money");
                 return;
