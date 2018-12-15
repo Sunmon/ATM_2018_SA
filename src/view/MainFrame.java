@@ -7,21 +7,10 @@ import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame
 {
-    static Dimension d = new Dimension(1000, 800);
+    //TODO: 싱글톤 패턴 구현
+    private static MainFrame instance = new MainFrame();
 
-    private JPanel mainPanel;
-    private JPanel MenuView;
-    private JButton depositButton;
-    private JButton withdrawButton;
-    private JButton transferButton;
-    private JPanel insertView;
-    private JButton backButton;
-    private JPanel insertMoney;
-    private JButton backMbutton;
-
-
-    //생성자
-    public MainFrame()
+    private MainFrame()
     {
         add(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,6 +42,61 @@ public class MainFrame extends JFrame
         backButton.addActionListener(backListener);
         backMbutton.addActionListener(backListener);
     }
+    public static MainFrame getInstance()
+    {
+        return instance;
+    }
+
+
+
+
+
+    static Dimension d = new Dimension(1000, 800);
+
+    private JPanel mainPanel;
+    private JPanel MenuView;
+    private JButton depositButton;
+    private JButton withdrawButton;
+    private JButton transferButton;
+    private JPanel insertView;
+    private JButton backButton;
+    private JPanel insertMoney;
+    private JButton backMbutton;
+
+
+    //생성자
+    /*public MainFrame()
+    {
+        add(mainPanel);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(d);
+        ActionListener listener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                changeView("insert");
+            }
+        };
+
+        ActionListener backListener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                changeView("main");
+            }
+        };
+
+        //메뉴중에 어떤 버튼을 누르든 카드 입력하는 화면으로 가기
+        depositButton.addActionListener(listener);
+        withdrawButton.addActionListener(listener);
+        transferButton.addActionListener(listener);
+
+        //뒤로가기 버튼 리스너
+        backButton.addActionListener(backListener);
+        backMbutton.addActionListener(backListener);
+    }*/
 
 
 
