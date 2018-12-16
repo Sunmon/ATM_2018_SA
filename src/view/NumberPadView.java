@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -21,8 +22,12 @@ public class NumberPadView extends JPanel
     private JButton deleteButton;
     private JButton okButton;
     private JButton a0Button;
+
+
+
     private JButton manButton;
     private JButton resetButton;
+    private JPanel numPanel;
 
     private JTextField textField;           //다른 패널에 있는 textField(금액, 카드번호 등)
     private JPasswordField passwordField;   //비밀번호 입력창.
@@ -31,8 +36,6 @@ public class NumberPadView extends JPanel
     public NumberPadView()
     {
         init();
-
-
     }
 
     private void init()
@@ -188,7 +191,10 @@ public class NumberPadView extends JPanel
         temp+= Integer.toString(but);
         textField.setText(temp);
     }
-
+    public JButton getManButton()
+    {
+        return manButton;
+    }
 
     public JTextField getTextField()
     {

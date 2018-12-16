@@ -22,7 +22,6 @@ public class MainFrame extends JFrame
     //금액 입력 화면
     private JPanel insertMoney;
     private JButton backMbutton;
-    private JLabel msgLabel;
     private InsertMoneyView insertMoneyPanel;
     //송금받을 카드번호 입력 화면
     private JPanel insertTransferView;

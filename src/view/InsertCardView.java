@@ -26,6 +26,7 @@ public class InsertCardView extends JPanel implements IView
         this.currentMode = Mode.CARD;
         numberPadPanel.setRelatedPanel(this);   //연관된 numberPad 에 해당 객체가 연결되어있다고 설정
         numberPadPanel.showManButton(false);
+
         getTextField().setCaretColor(getBackground());
     }
 
