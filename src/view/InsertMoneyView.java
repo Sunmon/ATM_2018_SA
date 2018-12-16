@@ -8,7 +8,7 @@ public class InsertMoneyView extends JPanel implements IView
     private JLabel wonLabel;
     private JTextField moneyTextField;
     private NumberPadView numberPadPanel;
-    private String mode;
+    private String nextMode;
     private static InsertMoneyView instance;
 
     // 생성자. 다른 클래스에서 instance 로 접근할 수 있게 설정.
@@ -36,14 +36,14 @@ public class InsertMoneyView extends JPanel implements IView
         return moneyTextField;
     }
 
-    public void setMode(String mode)
+    public void setNextMode(String nextMode)
     {
-        this.mode = mode;
+        this.nextMode = nextMode;
     }
 
     @Override
     public String getNextMode()
     {
-        return mode;
+        return nextMode;
     }
 }

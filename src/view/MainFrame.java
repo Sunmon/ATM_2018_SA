@@ -24,6 +24,9 @@ public class MainFrame extends JFrame
     private JPanel insertTransferView;
     private InsertCardView insertTransferPanel;
     private JButton backTransferButton;
+    private JPanel passwordView;
+    private NumberPadView numberPadPanel;
+    private InforView inforPanel;
 
     private String cardNum;     //model에 연결하기 전 GUI에서 임시로 카드번호 저장
 
@@ -50,6 +53,10 @@ public class MainFrame extends JFrame
 
 
         //TODO: 다른 panel들도 nextMode 설정하기.. money랑 다른거랑 -> interface 설정 먼저!
+        //TODO: 비번 입력 화면
+
+
+
         //Action listener 설정
         ActionListener listener = new ActionListener()
         {
@@ -60,7 +67,13 @@ public class MainFrame extends JFrame
                 {
                     insertCardPanel.setNextMode("money");
                 }
-                if(e.getSource().equals(withdrawButton)) insertCardPanel.setNextMode("money");
+                if(e.getSource().equals(withdrawButton))
+                {
+                    insertCardPanel.setNextMode("money");
+                    insertMoneyPanel.setNextMode("password");
+                    inforPanel.getCardLayout().next(inforPanel.getBackgroundPanel());
+
+                }
                 if(e.getSource().equals(transferButton)) insertCardPanel.setNextMode("transfer");
                 System.out.println("insertCardPanel: + "+ insertCardPanel.getNextMode());
                 changeView("insert");
