@@ -1,4 +1,4 @@
-package view;
+package view.test;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,14 +15,32 @@ public class InforView extends JPanel
     private JLabel p4;
 
 
+
+    private JTextField currentTextField;
+    private JPanel currentCardPanel;
+
     public CardLayout getCardLayout()
     {
         return (CardLayout) backgroundPanel.getLayout();
     }
 
+    //카드네임에 따라 어떤 패널을 꺼내는지 리턴.
+    public JPanel getCurrentCardPanel()
+    {
+        return currentCardPanel;
 
+    }
+
+
+    public void setCurrentTextField(JTextField currentTextField)
+    {
+        this.currentTextField = currentTextField;
+    }
 
     private JPanel backgroundPanel;
+    private JPanel moneyPanel;
+    private JTextField moneyField;
+    private JLabel wonLabel;
 
     public JPanel getBackgroundPanel()
     {
@@ -105,8 +123,28 @@ public class InforView extends JPanel
     }
 
 
+    public void setCurrentCardPanel(String cardName)
+    {
+        if(cardName.equals("insert"))
+        {
+            currentCardPanel = insertCardPanel;
+            currentTextField = cardTextField;
+        }
+        else if(cardName.equals("password"))
+        {
+            currentCardPanel = passwordPanel;
+            currentTextField = null;
+        }
+        else if(cardName.equals("money"))
+        {
+            currentCardPanel = moneyPanel;
+            currentTextField = moneyField;
+        }
+    }
 
-
-
+    public JTextField getCurrentTextField()
+    {
+        return currentTextField;
+    }
 
 }

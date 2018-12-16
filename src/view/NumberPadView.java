@@ -75,6 +75,7 @@ public class NumberPadView extends JPanel
 
     }
 
+
     //만원버튼 보이기 안보이기
     public void showManButton(boolean b)
     {

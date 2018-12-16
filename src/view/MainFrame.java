@@ -25,8 +25,9 @@ public class MainFrame extends JFrame
     private InsertCardView insertTransferPanel;
     private JButton backTransferButton;
     private JPanel passwordView;
+    private JButton backPButton;
     private NumberPadView numberPadPanel;
-    private InforView inforPanel;
+//    private InforView inforPanel;
 
     private String cardNum;     //model에 연결하기 전 GUI에서 임시로 카드번호 저장
 
@@ -35,6 +36,8 @@ public class MainFrame extends JFrame
     private MainFrame()
     {
         init();
+
+
     }
     public static MainFrame getInstance()
     {
@@ -71,7 +74,7 @@ public class MainFrame extends JFrame
                 {
                     insertCardPanel.setNextMode("money");
                     insertMoneyPanel.setNextMode("password");
-                    inforPanel.getCardLayout().next(inforPanel.getBackgroundPanel());
+//                    inforPanel.getCardLayout().next();
 
                 }
                 if(e.getSource().equals(transferButton)) insertCardPanel.setNextMode("transfer");
@@ -101,6 +104,7 @@ public class MainFrame extends JFrame
         backButton.addActionListener(backListener);
         backMbutton.addActionListener(backListener);
         backTransferButton.addActionListener(backListener);
+        backPButton.addActionListener(backListener);
 
     }
 
