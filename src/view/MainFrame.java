@@ -101,6 +101,7 @@ public class MainFrame extends JFrame
             menu = "DEPOSIT";
             insertCardPanel.setNextMode(Mode.MONEY);
             insertMoneyPanel.setNextMode(Mode.ALERT);
+
         }
         else if(e.getSource().equals(withdrawButton))
         {

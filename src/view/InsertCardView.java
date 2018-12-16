@@ -1,5 +1,11 @@
 package view;
 import javax.swing.*;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.NumberFormatter;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.text.NumberFormat;
 
 //카드번호 입력받는 클래스
 public class InsertCardView extends JPanel implements IView
@@ -20,6 +26,7 @@ public class InsertCardView extends JPanel implements IView
         this.currentMode = Mode.CARD;
         numberPadPanel.setRelatedPanel(this);   //연관된 numberPad 에 해당 객체가 연결되어있다고 설정
         numberPadPanel.showManButton(false);
+        getTextField().setCaretColor(getBackground());
     }
 
     //외부에서 이 객체 참조하게 하는 메소드
@@ -29,7 +36,6 @@ public class InsertCardView extends JPanel implements IView
             instance = new InsertCardView();
         return instance;
     }
-
 
     //Getter & Setter
     public void setNextMode(Mode nextMode)
@@ -55,4 +61,6 @@ public class InsertCardView extends JPanel implements IView
     {
         this.currentMode = currentMode;
     }
+
+
 }
