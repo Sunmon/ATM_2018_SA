@@ -1,7 +1,7 @@
 package view;
-
 import javax.swing.*;
 
+//카드번호 입력받는 클래스
 public class InsertCardView extends JPanel implements IView
 {
     private JPanel panel1;
@@ -16,7 +16,7 @@ public class InsertCardView extends JPanel implements IView
     public InsertCardView()
     {
         instance = this;
-        numberPadPanel.setRelatedPanel(this);
+        numberPadPanel.setRelatedPanel(this);   //연관된 numberPad 에 해당 객체가 연결되어있다고 설정
     }
 
     //외부에서 이 객체 참조하게 하는 메소드
