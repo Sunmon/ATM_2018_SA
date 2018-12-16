@@ -24,9 +24,12 @@ public class MainFrame extends JFrame
     private JPanel insertTransferView;
     private InsertCardView insertTransferPanel;
     private JButton backTransferButton;
-    private JPanel passwordView;
+    private JPanel insertPassword;
     private JButton backPButton;
+    private PasswordView insertPasswordPanel;
     private NumberPadView numberPadPanel;
+
+    private String function;    //deposit, withdraw, transfer 중 어떤 작업을 하는지 저장
 //    private InforView inforPanel;
 
     private String cardNum;     //model에 연결하기 전 GUI에서 임시로 카드번호 저장
@@ -65,19 +68,27 @@ public class MainFrame extends JFrame
         {
             @Override
             public void actionPerformed(ActionEvent e)
-            {
+            {   //TODO: 맨처음 메뉴 버튼 눌렀을때
                 if(e.getSource().equals(depositButton))
                 {
+                    function = "deposit";
                     insertCardPanel.setNextMode("money");
+                    insertMoneyPanel.setNextMode("alert");
                 }
                 if(e.getSource().equals(withdrawButton))
                 {
+                    function = "withdraw";
                     insertCardPanel.setNextMode("money");
                     insertMoneyPanel.setNextMode("password");
-//                    inforPanel.getCardLayout().next();
-
+                    insertPasswordPanel.setNextMode("alert");
                 }
-                if(e.getSource().equals(transferButton)) insertCardPanel.setNextMode("transfer");
+                if(e.getSource().equals(transferButton))
+                {
+                    function = "transfer";
+                    insertCardPanel.setNextMode("transfer");
+                    insertTransferPanel.setNextMode("money");
+                    insertMoneyPanel.setNextMode("alert");
+                }
                 System.out.println("insertCardPanel: + "+ insertCardPanel.getNextMode());
                 changeView("insert");
             }
@@ -89,8 +100,7 @@ public class MainFrame extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                insertCardPanel.getCreditTextField().setText("");
-                insertTransferPanel.getCreditTextField().setText("");
+                clearTexts();
                 changeView("main");
             }
         };
@@ -118,6 +128,11 @@ public class MainFrame extends JFrame
 
     }
 
+    public void clearTexts()
+    {
+        insertCardPanel.getCreditTextField().setText("");
+        insertTransferPanel.getCreditTextField().setText("");
+    }
 
     //모델에 연결 전. GUI상으로 임시로 저장하는 카드 번호.
     public String getCardNum()
@@ -132,4 +147,9 @@ public class MainFrame extends JFrame
     {
         return mainPanel;
     }
+    public String getFunction()
+    {
+        return function;
+    }
+
 }

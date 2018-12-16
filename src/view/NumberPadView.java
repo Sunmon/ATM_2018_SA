@@ -1,7 +1,3 @@
-//TODO: NumberPadView 클래스 안 쓴다!!!!!!!!!!!!!!!!!
-
-
-
 package view;
 
 import javax.swing.*;
@@ -115,6 +111,7 @@ public class NumberPadView extends JPanel
                 System.out.println("okbutton pressed: " + relatedPanel.getNextMode());
                 MainFrame.getInstance().setCardNum(textField.getText());
                 MainFrame.getInstance().changeView(relatedPanel.getNextMode());
+                if(relatedPanel.getNextMode().equals("alert")) ResultAlert.alert((JPanel)relatedPanel, "");
                 return;
             case 12:    //reset button
                 temp = "";
