@@ -13,6 +13,8 @@ public class InsertCardView extends JPanel implements IView
     private JPanel panel1;
     private JTextField creditTextField;
     private JPanel creditCardPanel;
+
+
     private JLabel creditCardNumberLabel;
     private NumberPadView numberPadPanel;   //number Pad
     private static InsertCardView instance; // 자기자신(객체)
@@ -26,7 +28,6 @@ public class InsertCardView extends JPanel implements IView
         this.currentMode = Mode.CARD;
         numberPadPanel.setRelatedPanel(this);   //연관된 numberPad 에 해당 객체가 연결되어있다고 설정
         numberPadPanel.showManButton(false);
-
         getTextField().setCaretColor(getBackground());
     }
 
@@ -62,6 +63,11 @@ public class InsertCardView extends JPanel implements IView
     {
         this.currentMode = currentMode;
     }
+    public JLabel getCreditCardNumberLabel()
+    {
+        return creditCardNumberLabel;
+    }
+
 
 
 }

@@ -115,7 +115,8 @@ public class MainFrame extends JFrame
             insertCardPanel.setNextMode(Mode.TRANSFER);
             insertTransferPanel.setNextMode(Mode.MONEY);
             insertTransferPanel.setCurrentMode(Mode.TRANSFER);
-            insertMoneyPanel.setNextMode(Mode.ALERT);
+            insertTransferPanel.getCreditCardNumberLabel().setText("INSERT RECEIVER CARD NU");
+            insertMoneyPanel.setNextMode(Mode.PASSWORD);
         }
         changeView(Mode.CARD);
     }

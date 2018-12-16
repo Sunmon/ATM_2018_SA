@@ -17,7 +17,6 @@ public class InsertMoneyView extends JPanel implements IView
         this.currentMode = Mode.MONEY;
         numberPadPanel.setRelatedPanel(this);
         numberPadPanel.showManButton(true);
-
         getTextField().setCaretColor(getBackground());
         //instance = this;
     }
