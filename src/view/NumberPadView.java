@@ -26,10 +26,6 @@ public class NumberPadView extends JPanel
     private JPasswordField passwordField;   //비밀번호 입력창.
     IView relatedPanel; //연관된 패널.
 
-//TODO: setRelatedPanel 수정.. moneyView관련해서 도 만들기!
-    // TODO: 파라미터 하나 없애기.
-
-
     public NumberPadView()
     {
         init();
@@ -111,7 +107,7 @@ public class NumberPadView extends JPanel
                 System.out.println("okbutton pressed: " + relatedPanel.getNextMode());
                 MainFrame.getInstance().setCardNum(textField.getText());
                 MainFrame.getInstance().changeView(relatedPanel.getNextMode());
-                if(relatedPanel.getNextMode().equals("alert")) ResultAlert.alert((JPanel)relatedPanel, "");
+                if(relatedPanel.getNextMode()==Mode.ALERT) ResultAlert.alert((JPanel)relatedPanel, "");
                 return;
             case 12:    //reset button
                 temp = "";

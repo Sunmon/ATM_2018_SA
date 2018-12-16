@@ -63,29 +63,8 @@ public class MainFrame extends JFrame
         {
             @Override
             public void actionPerformed(ActionEvent e)
-            {   //메뉴 버튼들 눌렀을때 행동 설정
-                if(e.getSource().equals(depositButton))
-                {
-                    function = "deposit";
-                    insertCardPanel.setNextMode("money");
-                    insertMoneyPanel.setNextMode("alert");
-                }
-                if(e.getSource().equals(withdrawButton))
-                {
-                    function = "withdraw";
-                    insertCardPanel.setNextMode("money");
-                    insertMoneyPanel.setNextMode("password");
-                    insertPasswordPanel.setNextMode("alert");
-                }
-                if(e.getSource().equals(transferButton))
-                {
-                    function = "transfer";
-                    insertCardPanel.setNextMode("transfer");
-                    insertTransferPanel.setNextMode("money");
-                    insertMoneyPanel.setNextMode("alert");
-                }
-                System.out.println("insertCardPanel: + "+ insertCardPanel.getNextMode());
-                changeView("insert");
+            {   //TODO: 메뉴 버튼 눌렀을때 행동 설정
+                menuButtonPressed(e);
             }
         };
 
@@ -96,7 +75,7 @@ public class MainFrame extends JFrame
             public void actionPerformed(ActionEvent e)
             {
                 clearTexts();
-                changeView("main");
+                changeView(Mode.MAIN);
             }
         };
 
@@ -113,20 +92,65 @@ public class MainFrame extends JFrame
 
     }
 
-    //상황에 맞는 패널로 띄워준다.
-    //cardName : main, insert, money, transfer 중 하나
-    public void changeView(String cardName)
+    private void menuButtonPressed(ActionEvent e)
     {
-        CardLayout c = (CardLayout)mainPanel.getLayout();
-        c.show(mainPanel, cardName);
+        //메뉴 버튼들 눌렀을때 행동 설정
+        //TODO 1: 메뉴 버튼들 enum으로 바꾸기
+        //TODO 2: function들 enum으로 바꾸기
+        if(e.getSource().equals(depositButton))
+        {
+            function = "deposit";
+            insertCardPanel.setNextMode(Mode.MONEY);
+            insertMoneyPanel.setNextMode(Mode.ALERT);
+//            insertCardPanel.setNextMode("money");
+//            insertMoneyPanel.setNextMode("alert");
+        }
+        if(e.getSource().equals(withdrawButton))
+        {
+            function = "withdraw";
+/*
+            insertCardPanel.setNextMode("money");
+            insertMoneyPanel.setNextMode("password");
+            insertPasswordPanel.setNextMode("alert");
+*/
+            insertCardPanel.setNextMode(Mode.MONEY);
+            insertMoneyPanel.setNextMode(Mode.PASSWORD);
+            insertPasswordPanel.setNextMode(Mode.ALERT);
+        }
+        if(e.getSource().equals(transferButton))
+        {
+            function = "transfer";
+            /*
+            insertCardPanel.setNextMode("transfer");
+            insertTransferPanel.setNextMode("money");
+            insertMoneyPanel.setNextMode("alert");
+           */
 
+            insertCardPanel.setNextMode(Mode.TRANSFER);
+            insertTransferPanel.setNextMode(Mode.MONEY);
+            insertMoneyPanel.setNextMode(Mode.ALERT);
 
+        }
+
+        System.out.println("insertCardPanel: + "+ insertCardPanel.getNextMode());
+        changeView(Mode.CARD);
     }
 
+    //상황에 맞는 패널로 띄워준다.
+    //cardName : main, insert, money, transfer 중 하나
+    public void changeView(Mode mode)
+    {
+        CardLayout c = (CardLayout)mainPanel.getLayout();
+        c.show(mainPanel, mode.name());
+    }
+
+    //메인화면으로 돌아가면 기존 text에 썼던 내용들 다 지우기
     public void clearTexts()
     {
-        insertCardPanel.getCreditTextField().setText("");
-        insertTransferPanel.getCreditTextField().setText("");
+        insertCardPanel.getTextField().setText("");
+        insertTransferPanel.getTextField().setText("");
+        insertMoneyPanel.getTextField().setText("");
+        insertPasswordPanel.getTextField().setText("");
     }
 
     //모델에 연결 전. GUI상으로 임시로 저장하는 카드 번호.

@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class ResultAlert extends JDialog
 {
     private JPanel contentPane;
@@ -29,7 +30,7 @@ public class ResultAlert extends JDialog
     {
         //알림 OK 버튼 눌렀을 때
         MainFrame.getInstance().clearTexts();
-        MainFrame.getInstance().changeView("main");
+        MainFrame.getInstance().changeView(Mode.MAIN);
         dispose();
     }
 

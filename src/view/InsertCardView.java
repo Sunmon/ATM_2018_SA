@@ -9,8 +9,12 @@ public class InsertCardView extends JPanel implements IView
     private JPanel creditCardPanel;
     private JLabel creditCardNumberLabel;
     private NumberPadView numberPadPanel;   //number Pad
-    private String nextMode = "";           //다음 띄워야 하는 화면 설정. money, transfer, password 등등
+
     private static InsertCardView instance; // 자기자신(객체)
+
+    //TODO: nextMode를  enum으로 바꾸기
+//    private String nextMode = "";           //다음 띄워야 하는 화면 설정. money, transfer, password 등등
+    private Mode nextMode;
 
     //생성자
     public InsertCardView()
@@ -34,7 +38,11 @@ public class InsertCardView extends JPanel implements IView
         return creditTextField;
     }
 
-    public void setNextMode(String nextMode)
+//    public void setNextMode(String nextMode)
+//    {
+//        this.nextMode = nextMode;
+//    }
+    public void setNextMode(Mode nextMode)
     {
         this.nextMode = nextMode;
     }
@@ -55,8 +63,14 @@ public class InsertCardView extends JPanel implements IView
         return creditTextField;
     }
 
+//    @Override
+//    public String getNextMode()
+//    {
+//        return nextMode;
+//    }
+
     @Override
-    public String getNextMode()
+    public Mode getNextMode()
     {
         return nextMode;
     }

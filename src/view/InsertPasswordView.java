@@ -7,7 +7,11 @@ public class InsertPasswordView extends JPanel implements IView
     private JPasswordField passwordField;
     private NumberPadView numberPadPanel;
     private JPanel Panel1;
-    String nextMode = "";                           //다음 띄워야 하는 화면 설정. money, transfer, password 등등
+
+
+    //TODO: nextMode enum으로 바꾸기
+//    String nextMode = "";                           //다음 띄워야 하는 화면 설정. money, transfer, password 등등
+    Mode nextMode;                           //다음 띄워야 하는 화면 설정. money, transfer, password 등등
     private static InsertPasswordView instance;     //자기 자신 객체 리턴용
 
     //생성자
@@ -31,7 +35,7 @@ public class InsertPasswordView extends JPanel implements IView
     {
         return passwordField;
     }
-    public void setNextMode(String nextMode)
+/*    public void setNextMode(String nextMode)
     {
         this.nextMode = nextMode;
     }
@@ -39,5 +43,19 @@ public class InsertPasswordView extends JPanel implements IView
     public String getNextMode()
     {
         return nextMode;
+    }*/
+
+    @Override
+    public Mode getNextMode()
+    {
+        return nextMode;
     }
+
+    public void setNextMode(Mode nextMode)
+    {
+        this.nextMode = nextMode;
+    }
+
+
+
 }

@@ -8,7 +8,12 @@ public class InsertMoneyView extends JPanel implements IView
     private JLabel wonLabel;
     private JTextField moneyTextField;          //금액 텍스트필드
     private NumberPadView numberPadPanel;       //숫자패드 클래스
-    private String nextMode;                    //다음 띄워야 하는 화면 설정. money, transfer, password 등등
+
+
+
+    //TODO: nextMode enum으로 바꾸기
+//    private String nextMode;                    //다음 띄워야 하는 화면 설정. money, transfer, password 등등
+    private Mode nextMode;                    //다음 띄워야 하는 화면 설정. money, transfer, password 등등
     private static InsertMoneyView instance;    //자기 자신 객체
 
     // 생성자
@@ -36,7 +41,19 @@ public class InsertMoneyView extends JPanel implements IView
     {
         return moneyTextField;
     }
-    public void setNextMode(String nextMode)
+
+
+    public void setNextMode(Mode nextMode)
+    {
+        this.nextMode = nextMode;
+    }
+
+    @Override
+    public Mode getNextMode()
+    {
+        return nextMode;
+    }
+/*    public void setNextMode(String nextMode)
     {
         this.nextMode = nextMode;
     }
@@ -44,5 +61,7 @@ public class InsertMoneyView extends JPanel implements IView
     public String getNextMode()
     {
         return nextMode;
-    }
+    }*/
+
+
 }
