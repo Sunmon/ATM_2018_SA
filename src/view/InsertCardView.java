@@ -59,6 +59,13 @@ public class InsertCardView extends JPanel implements IView
     {
         return currentMode;
     }
+
+    @Override
+    public JLabel[] getJLabelArr()
+    {
+        return new JLabel[0];
+    }
+
     public void setCurrentMode(Mode currentMode)
     {
         this.currentMode = currentMode;

@@ -42,6 +42,12 @@ public class InsertMoneyView extends JPanel implements IView
         return currentMode;
     }
 
+    @Override
+    public JLabel[] getJLabelArr()
+    {
+        return new JLabel[0];
+    }
+
 
     /*
     앞으로도 안 쓰면 삭제할 것!========================================================

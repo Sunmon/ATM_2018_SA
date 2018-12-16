@@ -136,7 +136,11 @@ public class MainFrame extends JFrame
         insertCardPanel.getTextField().setText("");
         insertTransferPanel.getTextField().setText("");
         insertMoneyPanel.getTextField().setText("");
-        insertPasswordPanel.getTextField().setText("");
+        for(JLabel lab : insertPasswordPanel.getJLabelArr())
+        {
+            lab.setText(" ");
+        }
+        insertPasswordPanel.getNumberPadPanel().initPointer();
     }
 
 

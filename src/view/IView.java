@@ -7,4 +7,5 @@ public interface IView
     JTextField getTextField();     //text field 리턴
     Mode getNextMode();          //다음에 어떤 화면이 와야 할 지 리턴
     Mode getCurrentMode();
+    JLabel[] getJLabelArr();
 }
