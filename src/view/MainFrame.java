@@ -34,11 +34,7 @@ public class MainFrame extends JFrame
     private InsertPasswordView insertPasswordPanel;
     //각 화면에 쓰이는 숫자패드 패널
     private NumberPadView numberPadPanel;
-    private String cardNum;     //model에 연결하기 전 GUI에서 임시로 카드번호 저장... 삭제할것
-
-
-
-//    private String function;
+    private String menu;
 
 
 
@@ -102,17 +98,20 @@ public class MainFrame extends JFrame
         //현재 화면의 정보. 다음에 나와야 할 화면 정보 설정
         if(e.getSource().equals(depositButton))
         {
+            menu = "DEPOSIT";
             insertCardPanel.setNextMode(Mode.MONEY);
             insertMoneyPanel.setNextMode(Mode.ALERT);
         }
         else if(e.getSource().equals(withdrawButton))
         {
+            menu = "WITHDRAW";
             insertCardPanel.setNextMode(Mode.MONEY);
             insertMoneyPanel.setNextMode(Mode.PASSWORD);
             insertPasswordPanel.setNextMode(Mode.ALERT);
         }
         else if(e.getSource().equals(transferButton))
         {
+            menu = "TRANSFER";
             insertCardPanel.setNextMode(Mode.TRANSFER);
             insertTransferPanel.setNextMode(Mode.MONEY);
             insertTransferPanel.setCurrentMode(Mode.TRANSFER);
@@ -139,23 +138,10 @@ public class MainFrame extends JFrame
         insertPasswordPanel.getTextField().setText("");
     }
 
-    public String getCardNum()
+
+    public String getMenu()
     {
-        return cardNum;
+        return menu;
     }
-    public void setCardNum(String cardNum)
-    {
-        this.cardNum = cardNum;
-    }
-/*    public JPanel getMainPanel()
-    {
-        return mainPanel;
-    }*/
-/*
-    public String getFunction()
-    {
-        return function;
-    }
-*/
 
 }

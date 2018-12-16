@@ -7,10 +7,7 @@ public class ViewMain
         MainFrame mf = MainFrame.getInstance();
         mf.setVisible(true);
 
-
-        //원하는 화면카드 띄워주기
+        //메인메뉴 띄우기
         mf.changeView(Mode.MAIN);
-//        mf.changeView("insert");
-//        mf.changeView("money");
     }
 }

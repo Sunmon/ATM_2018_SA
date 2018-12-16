@@ -38,7 +38,7 @@ public class NumberPadView extends JPanel
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                onNumButton(e.getSource(), textField);
+                onButton(e.getSource(), textField);
             }
         };
 
@@ -53,12 +53,11 @@ public class NumberPadView extends JPanel
         a8Button.addActionListener(listener);
         a9Button.addActionListener(listener);
         a0Button.addActionListener(listener);
+        resetButton.addActionListener(listener);
+        deleteButton.addActionListener(listener);
+        okButton.addActionListener(listener);
         manButton.addActionListener(listener);
 
-
-        deleteButton.addActionListener(listener);
-        resetButton.addActionListener(listener);
-        okButton.addActionListener(listener);
     }
 
 
@@ -79,10 +78,9 @@ public class NumberPadView extends JPanel
 
 
 
-    //버튼 눌렀을때 textField에 누른 숫자대로 뜨게 하는 메소드
-    public void onNumButton(Object o, JTextField textField)
+    //버튼 눌렀을때 행동 설정
+    public void onButton(Object o, JTextField textField)
     {
-
         //어느 버튼을 눌렀는지 저장
         Object[] buttons = new Object[]
                 {a0Button, a1Button, a2Button, a3Button, a4Button, a5Button, a6Button,
@@ -101,33 +99,92 @@ public class NumberPadView extends JPanel
         switch(but)
         {
             case 10:    //delete button
-                if(temp.length() == 0) break;
-                temp = temp.substring(0, temp.length()-1);
+                onDeleteButton(temp);
                 break;
             case 11:    //OK button
-                System.out.println("okbutton pressed: " + relatedPanel.getNextMode());
-                MainFrame.getInstance().setCardNum(textField.getText());
-                MainFrame.getInstance().changeView(relatedPanel.getNextMode());
-                if(relatedPanel.getNextMode()==Mode.ALERT) ResultAlert.alert((JPanel)relatedPanel, "");
+                onOKButton(temp);
                 return;
             case 12:    //reset button
-                temp = "";
+                onResetButton(temp);
                 break;
             case 13:    //man button
-                if(temp.length() == 0) break;
-                if(temp.length()>3)
-                {
-                    String str = temp.substring(temp.length()-4,temp.length());
-                    if(str.equals("0000")) break;
-                }
-                temp+= "0000";
+                onManButton(temp);
                 break;
             default:    //number buttons
-                temp+= Integer.toString(but);
+                onNumButton(temp, but);
                 break;
         }
+    }
+
+
+    //ok버튼 눌렀을 때
+    private void onOKButton(String temp)
+    {
+        //TODO: 모델과 연동되는 코드 여기 작성
+
+        //에러 체크하기
+        if(textField.getText().length()==0) ResultAlert.alert(this, "ERROR_EMPTY");
+        else if(doModelMethod(relatedPanel.getCurrentMode())) return;
+        else if(relatedPanel.getNextMode()==Mode.ALERT)
+            ResultAlert.alert(this, MainFrame.getInstance().getMenu());
+        else MainFrame.getInstance().changeView(relatedPanel.getNextMode());
+    }
+
+    private boolean doModelMethod(Mode currentMode)
+    {   //TODO: 모델 관련 메소드.. 에러 체크 등등
+        switch(currentMode)
+        {
+            case CARD : //카드 번호 입력할 때 체크해야 하는 메소드
+                        //ResultAlert.alert(this, "ERROR_CARD");
+                        //return true;
+            case MONEY: //금액 입력할 때 체크해야 하는 메소드
+                        //ResultAlert.alert(this, "ERROR_MONEY");
+            case TRANSFER: //송금받을 카드 번호 입력할 때 체크해야 하는 메소드
+                            //ResultAlert.alert(this,"ERROR_CARD");
+                            //return true;
+            case PASSWORD:  //비밀번호 입력할 때 체크해야 하는 메소드
+                            //ResultAlert.alert(this, "ERROR_PW");
+                            //ResultAlert.alert(this,"ERROR_BALANCE");
+            default: break;
+        }
+        return false;
+    }
+
+    //만원 버튼 눌렀을 때 행동
+    private void onManButton(String temp)
+    {
+        if(temp.length() == 0) return;
+        if(temp.length()>3)
+        {
+            String str = temp.substring(temp.length()-4,temp.length());
+            if(str.equals("0000")) return;
+        }
+        temp+= "0000";
         textField.setText(temp);
     }
+
+    //resetButton 눌렀을때 행동
+    private void onResetButton(String temp)
+    {
+        temp = "";
+        textField.setText(temp);
+    }
+
+    //delete button 눌렀을 때 행동
+    private void onDeleteButton(String temp)
+    {
+        if(temp.length() == 0) return;
+        temp =  temp.substring(0, temp.length()-1);
+        textField.setText(temp);
+    }
+
+    //그냥 숫자버튼 눌렀을 때
+    private void onNumButton(String temp, int but)
+    {
+        temp+= Integer.toString(but);
+        textField.setText(temp);
+    }
+
 
     public JTextField getTextField()
     {
