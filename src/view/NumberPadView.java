@@ -26,44 +26,18 @@ public class NumberPadView extends JPanel
     private JButton manButton;
     private JButton resetButton;
 
-
-
     private JTextField textField;           //다른 패널에 있는 textField(금액, 카드번호 등)
     private JPasswordField passwordField;   //비밀번호 입력창.
+    IView relatedPanel; //연관된 패널.
 
-    IView relatedPanel;
-//    JPanel relatedPanel;
-/*
-    public void setRelatedPanel(JPanel pan, JTextField jtf)
-    {
-//        if(pan.equals(testInertView.getInstance())) textField = testInertView.getInstance().getTextField1();
-//        if(pan.equals(InsertCardView.getInstance())) textField = InsertCardView.getInstance().getCreditTextField();
-        relatedPanel = pan;
-        textField = jtf;
-
-        if(pan.equals(InsertMoneyView.getInstance())) textField = InsertMoneyView.getInstance().getMoneyTextField();
-        System.out.println("textFiled");
-    }*/
-
-public void setRelatedPanel(IView pan, JTextField jtf)
-{
-    relatedPanel = pan;
-    textField = jtf;
-
-}
+//TODO: setRelatedPanel 수정.. moneyView관련해서 도 만들기!
+    // TODO: 파라미터 하나 없애기.
 
 
     public NumberPadView()
     {
         init();
     }
-
-    public void showManButton(boolean b)
-    {
-        manButton.setEnabled(b);
-        manButton.setVisible(b);
-    }
-
 
     private void init()
     {
@@ -93,12 +67,28 @@ public void setRelatedPanel(IView pan, JTextField jtf)
     }
 
 
+    //number pad 와 연관된 panel 설정
+    public void setRelatedPanel(IView pan)
+    {
+        relatedPanel = pan;
+        textField = pan.getTextField();
+
+    }
+
+    //만원버튼 보이기 안보이기
+    public void showManButton(boolean b)
+    {
+        manButton.setEnabled(b);
+        manButton.setVisible(b);
+    }
+
 
 
     //버튼 눌렀을때 textField에 누른 숫자대로 뜨게 하는 메소드
     public void addToText(Object o, JTextField textField)
     {
 
+        //TODO: enumㅇ로 바꿔보기?
         //누른 버튼 정보를 but에 숫자로 저장
         Object[] buttons = new Object[]
                 {a0Button, a1Button, a2Button, a3Button, a4Button, a5Button, a6Button,
@@ -121,12 +111,9 @@ public void setRelatedPanel(IView pan, JTextField jtf)
                 temp = temp.substring(0, temp.length()-1);
                 break;
             case 11:    //OK button
-                //NOTE: 임의로 cardNum에 저장해둠. 나중에 model과 합치면 수정할 부분!
-//                System.out.println("okbutton pressed: " +InsertCardView.getInstance().getNextMode());
                 System.out.println("okbutton pressed: " + relatedPanel.getNextMode());
-
                 MainFrame.getInstance().setCardNum(textField.getText());
-                MainFrame.getInstance().changeView("money");
+                MainFrame.getInstance().changeView(relatedPanel.getNextMode());
                 return;
             case 12:    //reset button
                 temp = "";

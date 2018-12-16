@@ -5,29 +5,21 @@ import javax.swing.*;
 public class InsertCardView extends JPanel implements IView
 {
     private JPanel panel1;
-
-
-
     private JTextField creditTextField;
     private JPanel creditCardPanel;
     private JLabel creditCardNumberLabel;
+    private NumberPadView numberPadPanel;   //number Pad
+    private String nextMode = "";           //다음 띄워야 하는 화면 설정. money, transfer, password 등등
+    private static InsertCardView instance; // 자기자신(객체)
 
-
-
-    private NumberPadView numberPadPanel;
-    private static InsertCardView instance;
-
-
-
-    private String nextMode = "";    //다음 띄워야 하는 화면 설정. money, transfer
-
-    //TODO: OK버튼 누르면 다음 화면으로 넘어가게 하기
+    //생성자
     public InsertCardView()
     {
         instance = this;
-        numberPadPanel.setRelatedPanel(this, creditTextField);
+        numberPadPanel.setRelatedPanel(this);
     }
 
+    //외부에서 이 객체 참조하게 하는 메소드
     public static InsertCardView getInstance()
     {
         if ( instance == null )
@@ -35,12 +27,12 @@ public class InsertCardView extends JPanel implements IView
         return instance;
     }
 
+
+    //Getter & Setter
     public JTextField getCreditTextField()
     {
         return creditTextField;
     }
-
-
 
     public void setNextMode(String nextMode)
     {

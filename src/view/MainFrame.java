@@ -48,6 +48,8 @@ public class MainFrame extends JFrame
         setSize(d);
 
 
+
+        //TODO: 다른 panel들도 nextMode 설정하기.. money랑 다른거랑 -> interface 설정 먼저!
         //Action listener 설정
         ActionListener listener = new ActionListener()
         {
@@ -57,9 +59,8 @@ public class MainFrame extends JFrame
                 if(e.getSource().equals(depositButton))
                 {
                     insertCardPanel.setNextMode("money");
-//                    insertCardPanel.getNumberPadPanel().setRelatedPanel(insertCardPanel, insertCardPanel.getCreditTextField());
                 }
-                if(e.getSource().equals(withdrawButton)) insertCardPanel.setNextMode("password");
+                if(e.getSource().equals(withdrawButton)) insertCardPanel.setNextMode("money");
                 if(e.getSource().equals(transferButton)) insertCardPanel.setNextMode("transfer");
                 System.out.println("insertCardPanel: + "+ insertCardPanel.getNextMode());
                 changeView("insert");
@@ -86,6 +87,7 @@ public class MainFrame extends JFrame
         //뒤로가기 버튼 리스너
         backButton.addActionListener(backListener);
         backMbutton.addActionListener(backListener);
+        backTransferButton.addActionListener(backListener);
 
     }
 
