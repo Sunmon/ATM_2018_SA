@@ -7,7 +7,6 @@ public class ViewMain
         MainFrame mf = MainFrame.getInstance();
         mf.setVisible(true);
 
-        //answers는 parameter로 들어오는 입력값
 
         //원하는 화면카드 띄워주기
         mf.changeView(Mode.MAIN);

@@ -34,9 +34,13 @@ public class MainFrame extends JFrame
     private InsertPasswordView insertPasswordPanel;
     //각 화면에 쓰이는 숫자패드 패널
     private NumberPadView numberPadPanel;
+    private String cardNum;     //model에 연결하기 전 GUI에서 임시로 카드번호 저장... 삭제할것
 
-    private String function;    //deposit, withdraw, transfer 중 어떤 작업을 하는지 저장
-    private String cardNum;     //model에 연결하기 전 GUI에서 임시로 카드번호 저장
+
+
+//    private String function;
+
+
 
     //싱글톤 이용한 생성자.
     private static MainFrame instance = new MainFrame();
@@ -63,12 +67,12 @@ public class MainFrame extends JFrame
         {
             @Override
             public void actionPerformed(ActionEvent e)
-            {   //TODO: 메뉴 버튼 눌렀을때 행동 설정
-                menuButtonPressed(e);
+            {
+                onMenuButton(e);
             }
         };
 
-        //뒤로가기 버튼
+        //뒤로가기 버튼 리스너
         ActionListener backListener = new ActionListener()
         {
             @Override
@@ -79,12 +83,12 @@ public class MainFrame extends JFrame
             }
         };
 
-        //메뉴중에 어떤 버튼을 누르든 카드 입력하는 화면으로 가기
+        //메뉴버튼 리스너 추가
         depositButton.addActionListener(listener);
         withdrawButton.addActionListener(listener);
         transferButton.addActionListener(listener);
 
-        //뒤로가기 버튼 리스너
+        //뒤로가기 버튼들에 리스너 추가
         backButton.addActionListener(backListener);
         backMbutton.addActionListener(backListener);
         backTransferButton.addActionListener(backListener);
@@ -92,57 +96,39 @@ public class MainFrame extends JFrame
 
     }
 
-    private void menuButtonPressed(ActionEvent e)
+    private void onMenuButton(ActionEvent e)
     {
         //메뉴 버튼들 눌렀을때 행동 설정
-        //TODO 1: 메뉴 버튼들 enum으로 바꾸기
-        //TODO 2: function들 enum으로 바꾸기
+        //현재 화면의 정보. 다음에 나와야 할 화면 정보 설정
         if(e.getSource().equals(depositButton))
         {
-            function = "deposit";
             insertCardPanel.setNextMode(Mode.MONEY);
             insertMoneyPanel.setNextMode(Mode.ALERT);
-//            insertCardPanel.setNextMode("money");
-//            insertMoneyPanel.setNextMode("alert");
         }
-        if(e.getSource().equals(withdrawButton))
+        else if(e.getSource().equals(withdrawButton))
         {
-            function = "withdraw";
-/*
-            insertCardPanel.setNextMode("money");
-            insertMoneyPanel.setNextMode("password");
-            insertPasswordPanel.setNextMode("alert");
-*/
             insertCardPanel.setNextMode(Mode.MONEY);
             insertMoneyPanel.setNextMode(Mode.PASSWORD);
             insertPasswordPanel.setNextMode(Mode.ALERT);
         }
-        if(e.getSource().equals(transferButton))
+        else if(e.getSource().equals(transferButton))
         {
-            function = "transfer";
-            /*
-            insertCardPanel.setNextMode("transfer");
-            insertTransferPanel.setNextMode("money");
-            insertMoneyPanel.setNextMode("alert");
-           */
-
             insertCardPanel.setNextMode(Mode.TRANSFER);
             insertTransferPanel.setNextMode(Mode.MONEY);
+            insertTransferPanel.setCurrentMode(Mode.TRANSFER);
             insertMoneyPanel.setNextMode(Mode.ALERT);
-
         }
-
-        System.out.println("insertCardPanel: + "+ insertCardPanel.getNextMode());
         changeView(Mode.CARD);
     }
 
     //상황에 맞는 패널로 띄워준다.
-    //cardName : main, insert, money, transfer 중 하나
+    //mode : MAIN, CARD, TRANSFER, PASSWORD, MONEY, ALERT 중 하나
     public void changeView(Mode mode)
     {
         CardLayout c = (CardLayout)mainPanel.getLayout();
         c.show(mainPanel, mode.name());
     }
+
 
     //메인화면으로 돌아가면 기존 text에 썼던 내용들 다 지우기
     public void clearTexts()
@@ -153,7 +139,6 @@ public class MainFrame extends JFrame
         insertPasswordPanel.getTextField().setText("");
     }
 
-    //모델에 연결 전. GUI상으로 임시로 저장하는 카드 번호.
     public String getCardNum()
     {
         return cardNum;
@@ -162,13 +147,15 @@ public class MainFrame extends JFrame
     {
         this.cardNum = cardNum;
     }
-    public JPanel getMainPanel()
+/*    public JPanel getMainPanel()
     {
         return mainPanel;
-    }
+    }*/
+/*
     public String getFunction()
     {
         return function;
     }
+*/
 
 }

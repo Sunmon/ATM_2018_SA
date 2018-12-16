@@ -12,15 +12,20 @@ public class InsertCardView extends JPanel implements IView
 
     private static InsertCardView instance; // 자기자신(객체)
 
-    //TODO: nextMode를  enum으로 바꾸기
+    //TODO: currentMode 추가
 //    private String nextMode = "";           //다음 띄워야 하는 화면 설정. money, transfer, password 등등
     private Mode nextMode;
+
+
+    private Mode currentMode;
 
     //생성자
     public InsertCardView()
     {
         instance = this;
+        this.currentMode = Mode.CARD;
         numberPadPanel.setRelatedPanel(this);   //연관된 numberPad 에 해당 객체가 연결되어있다고 설정
+        numberPadPanel.showManButton(false);
     }
 
     //외부에서 이 객체 참조하게 하는 메소드
@@ -74,4 +79,16 @@ public class InsertCardView extends JPanel implements IView
     {
         return nextMode;
     }
+
+    @Override
+    public Mode getCurrentMode()
+    {
+        return currentMode;
+    }
+
+    public void setCurrentMode(Mode currentMode)
+    {
+        this.currentMode = currentMode;
+    }
+
 }

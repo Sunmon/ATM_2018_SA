@@ -38,7 +38,7 @@ public class NumberPadView extends JPanel
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                addToText(e.getSource(), textField);
+                onNumButton(e.getSource(), textField);
             }
         };
 
@@ -53,6 +53,9 @@ public class NumberPadView extends JPanel
         a8Button.addActionListener(listener);
         a9Button.addActionListener(listener);
         a0Button.addActionListener(listener);
+        manButton.addActionListener(listener);
+
+
         deleteButton.addActionListener(listener);
         resetButton.addActionListener(listener);
         okButton.addActionListener(listener);
@@ -64,7 +67,6 @@ public class NumberPadView extends JPanel
     {
         relatedPanel = pan;
         textField = pan.getTextField();
-
     }
 
 
@@ -78,14 +80,13 @@ public class NumberPadView extends JPanel
 
 
     //버튼 눌렀을때 textField에 누른 숫자대로 뜨게 하는 메소드
-    public void addToText(Object o, JTextField textField)
+    public void onNumButton(Object o, JTextField textField)
     {
 
-        //TODO: enumㅇ로 바꿔보기?
-        //누른 버튼 정보를 but에 숫자로 저장
+        //어느 버튼을 눌렀는지 저장
         Object[] buttons = new Object[]
                 {a0Button, a1Button, a2Button, a3Button, a4Button, a5Button, a6Button,
-                        a7Button, a8Button, a9Button, deleteButton, okButton, resetButton};
+                        a7Button, a8Button, a9Button, deleteButton, okButton, resetButton, manButton};
 
         int but = 0;
         for(Object b: buttons)
@@ -111,6 +112,15 @@ public class NumberPadView extends JPanel
                 return;
             case 12:    //reset button
                 temp = "";
+                break;
+            case 13:    //man button
+                if(temp.length() == 0) break;
+                if(temp.length()>3)
+                {
+                    String str = temp.substring(temp.length()-4,temp.length());
+                    if(str.equals("0000")) break;
+                }
+                temp+= "0000";
                 break;
             default:    //number buttons
                 temp+= Integer.toString(but);
