@@ -10,7 +10,7 @@
       <grid id="ba419" binding="menuView" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <card name="main"/>
+          <card name="MAIN"/>
         </constraints>
         <properties/>
         <border type="none"/>
@@ -44,7 +44,7 @@
       <grid id="a947b" binding="insertView" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <card name="insert"/>
+          <card name="INSERT"/>
         </constraints>
         <properties/>
         <border type="none"/>
@@ -82,7 +82,7 @@
       <grid id="94acf" binding="insertMoney" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <card name="money"/>
+          <card name="MONEY"/>
         </constraints>
         <properties/>
         <border type="none"/>
@@ -128,7 +128,7 @@
       <grid id="50490" binding="insertTransferView" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <card name="transfer"/>
+          <card name="TRANSFER"/>
         </constraints>
         <properties/>
         <border type="none"/>
@@ -166,7 +166,7 @@
       <grid id="827ca" binding="insertPassword" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <card name="password"/>
+          <card name="PASSWORD"/>
         </constraints>
         <properties/>
         <border type="none"/>
