@@ -1,4 +1,6 @@
 package view;
+import model.server.DB.database;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -36,6 +38,9 @@ public class MainFrame extends JFrame
     private String menu;
 
 
+    //데이터베이스 연결
+    private database DB;
+
 
     //싱글톤 이용한 생성자.
     private static MainFrame instance = new MainFrame();
@@ -48,6 +53,8 @@ public class MainFrame extends JFrame
         if ( instance == null ) instance = new MainFrame();
         return instance;
     }
+
+
 
 
     //MainFrame 생성시 초기화하는 메소드
@@ -143,6 +150,15 @@ public class MainFrame extends JFrame
         insertPasswordPanel.getNumberPadPanel().initPointer();
     }
 
+    public database getDB()
+    {
+        return DB;
+    }
+
+    public void setDB(database DB)
+    {
+        this.DB = DB;
+    }
 
     public String getMenu()
     {

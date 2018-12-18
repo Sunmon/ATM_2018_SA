@@ -1,9 +1,11 @@
 package view;
+import model.server.DB.database;
 
 public class ViewMain
 {
     public static void main(String[] args)
     {
+
         MainFrame mf = MainFrame.getInstance();
         mf.setVisible(true);
 

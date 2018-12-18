@@ -82,7 +82,7 @@ public class database {
         return info;
     }
 
-    public boolean isValid(String accountId) {		// 계좌정보가 유효한지 확인함
+    public boolean isValid(String accountId) {		// 계좌정보가 유효한지 확인함. 유효하면 true
 		String sql = "select id from account where id = ?;";
 		try {
 			pstmt = conn.prepareStatement(sql);

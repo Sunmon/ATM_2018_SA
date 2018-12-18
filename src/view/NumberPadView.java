@@ -1,12 +1,10 @@
 package view;
 
+import model.server.DB.database;
+
 import javax.swing.*;
-import javax.xml.transform.Result;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class NumberPadView extends JPanel
 {
@@ -29,7 +27,10 @@ public class NumberPadView extends JPanel
     private JTextField textField;           //다른 패널에 있는 textField(금액, 카드번호 등)
     private JPasswordField passwordField;   //비밀번호 입력창.
     IView relatedPanel; //연관된 패널.
+
     private int pointer = 0;
+    private String cardNum;     //자신의 카드 번호
+    private String otherCardNum;    //다른사람의 카드 번호
 
     public NumberPadView()
     {
@@ -102,6 +103,9 @@ public class NumberPadView extends JPanel
 
         //누른 버튼에 맞게 textField 내용을 갱신
         String temp = textField.getText();
+        //FIXME: temp가져오는거 잘 됨?
+        System.out.println(temp);
+
         switch(but)
         {
             case 10:    //delete button
@@ -129,13 +133,16 @@ public class NumberPadView extends JPanel
         //TODO: 모델과 연동되는 코드 여기 작성.. temp는 현재 유저가 입력한 카드번호. 비밀번호.
         //에러 체크하기
 
+        //FIXME: temp잘 안 들어오나?
+        System.out.println("onOKButtonMethod: "+ temp);
+
         //입력 제대로 안 되었으면 에러
         if(temp.length() == 0 ||
                 (pointer <4 && relatedPanel.getCurrentMode()==Mode.PASSWORD))
             ResultAlert.alert(this, "ERROR_EMPTY");
 
         //그 외 상황별 에러 체크
-        else if(doModelMethod(relatedPanel.getCurrentMode())) return;
+        else if(IsModelError(relatedPanel.getCurrentMode(), temp, MainFrame.getInstance().getDB())) return;
 
         //모든 트랜젝션 끝이면 알람 띄우기
         else if(relatedPanel.getNextMode()==Mode.ALERT)
@@ -146,15 +153,40 @@ public class NumberPadView extends JPanel
     }
 
 
-    private boolean doModelMethod(Mode currentMode)
+    private boolean IsModelError(Mode currentMode, String str, database DB)
     {   //TODO: 모델 관련 메소드.. 에러 체크 등등
+        //에러가 없으면 false 리턴, 있으면 true 리턴
+        //str은 그때그때 달라짐. 카드번호, 비밀번호, 금액 다 가능.
+
+        //FIXME: str잘 안들어왔나?
+        System.out.println("isModel str: "+ str);
         switch(currentMode)
         {
             case CARD : //카드 번호 입력할 때 체크해야 하는 메소드
-                        //ResultAlert.alert(this, "ERROR_CARD");
-                        //return true;
+                        if(!DB.isValid(str))
+                        {
+                            ResultAlert.alert(this, "ERROR_CARD");
+                            return true;
+                        }
+                        cardNum = str;
+                        break;
             case MONEY: //금액 입력할 때 체크해야 하는 메소드
-                        //ResultAlert.alert(this, "ERROR_MONEY");
+                //예금하는 경우
+                if(relatedPanel.getNextMode() == Mode.ALERT)
+                {
+                    DB.putMoney(cardNum, str);
+                    break;
+                }
+                else    //출금하는 경우
+                {
+                    boolean success = DB.getMoney(cardNum, str);
+                    if(!success)
+                    {
+                        ResultAlert.alert(this, "ERROR_MONEY");
+                        return true;
+                    }
+                    break;
+                }
             case TRANSFER: //송금받을 카드 번호 입력할 때 체크해야 하는 메소드
                             //ResultAlert.alert(this,"ERROR_CARD");
                             //return true;
