@@ -19,7 +19,7 @@ public class ResultAlert extends JDialog
         TRANSFER("송금이 완료되었습니다."),
         ERROR_CARD("존재하지 않는 카드번호입니다."),
         ERROR_PW("비밀번호가 맞지 않습니다."),
-        ERROR_BALENCE("잔액이 충분하지 않습니다."),
+        ERROR_BALANCE("잔액이 충분하지 않습니다."),
         ERROR_EMPTY("항목이 채워지지 않았습니다.");
 
         private String msg;
