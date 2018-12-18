@@ -2,6 +2,7 @@ package view;
 import javax.swing.*;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.NumberFormatter;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -38,6 +39,18 @@ public class InsertCardView extends JPanel implements IView
             instance = new InsertCardView();
         return instance;
     }
+
+
+    //TODO: image test
+   /* String URL = "assets/menuSample.PNG";
+    public Image image;
+     try {
+    image = ImageIO.read(new URL("http://www.johnlennon.com/wp-content/themes/jl/images/home-gallery/2.jpg"));
+} catch (IOException e) {
+    e.printStackTrace();
+}
+*/
+
 
     //Getter & Setter
     public void setNextMode(Mode nextMode)
