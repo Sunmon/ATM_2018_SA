@@ -1,4 +1,11 @@
+//패키지 이름 하나로 통일할거 아니면 삭제하지말고 주석처리해주세요
+package model.server.server;
+import model.server.DB.database;
+
+/*
 package server;
+import DB.database;
+*/
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +16,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.StringTokenizer;
 
-import DB.database;
 
 public class server {	// 실제 서비스를 담당하지 않음 -> 접속을 요청하는 client 마다 한번의 서비스를 수행할 수 있는 스레드를 생성해줌
 	private ServerSocket serverSock;

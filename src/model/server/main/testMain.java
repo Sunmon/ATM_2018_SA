@@ -12,7 +12,9 @@ public class testMain {
 	db.rollback();    	
 	if(db.isValid("111111111")) {
 		db.getMoney("111111111", "50000");
-		db.putMoney("111111111", "50000");
+//		db.putMoney("111111111", "50000");
+		db.getMoney("111111111", "1000000000");
+
 	}
 	db.disconnect();
 	db.commit();
