@@ -41,17 +41,6 @@ public class InsertCardView extends JPanel implements IView
     }
 
 
-    //TODO: image test
-   /* String URL = "assets/menuSample.PNG";
-    public Image image;
-     try {
-    image = ImageIO.read(new URL("http://www.johnlennon.com/wp-content/themes/jl/images/home-gallery/2.jpg"));
-} catch (IOException e) {
-    e.printStackTrace();
-}
-*/
-
-
     //Getter & Setter
     public void setNextMode(Mode nextMode)
     {

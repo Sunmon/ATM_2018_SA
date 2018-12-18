@@ -102,8 +102,6 @@ public class NumberPadView extends JPanel
 
         //누른 버튼에 맞게 textField 내용을 갱신
         String temp = textField.getText();
-        //FIXME: temp가져오는거 잘 됨?
-        System.out.println(temp);
 
         switch(but)
         {
@@ -126,7 +124,6 @@ public class NumberPadView extends JPanel
     }
 
 
-    //TODO: commit 하기
     //ok버튼 눌렀을 때
     private void onOKButton(String temp)
     {
@@ -156,45 +153,51 @@ public class NumberPadView extends JPanel
         switch(currentMode)
         {
             case CARD : //카드 번호 입력할 때 체크해야 하는 메소드
-                        if(!DB.isValid(str))
-                        {
+
+                    if(!DB.isValid(str))    //카드 유효한지 검사   => //TODO: if(!DB.isValid(str))만 서버에 맞도록 고치면 된다
+                        {   //안 유효하다면 에러띄우가
                             ResultAlert.alert(this, "ERROR_CARD");
                             return true;
                         }
+
+                        //카드번호 GUI에서 쓸 수 있게 임시 저장
                         MainFrame.getInstance().setCardNum(str);
                         MainFrame.getInstance().setPWInfo();
                         break;
+
+
             case MONEY: //금액 입력할 때 체크해야 하는 메소드
                 //예금하는 경우
                 if(MainFrame.getInstance().getMenu().equals("DEPOSIT"))
                 {
-                    DB.putMoney(MainFrame.getInstance().getCardNum(), str);
+                    DB.putMoney(MainFrame.getInstance().getCardNum(), str); //TODO: 여기도 서버 이용하게 바꾸면 된다
                     break;
                 }
                 else    //출금하는 경우
                 {
-                    boolean success = DB.getMoney(MainFrame.getInstance().getCardNum(), str);
+                    boolean success = DB.getMoney(MainFrame.getInstance().getCardNum(), str);   //TODO: 여기도 서버로
                     if(!success)
                     {
-                        //TODO: error 확인
-//                        ResultAlert.alert(this, "ERROR_MONEY");
                         ResultAlert.alert(this,"ERROR_BALANCE");
-
                         return true;
                     }
                     break;
                 }
             case TRANSFER: //송금받을 카드 번호 입력할 때 체크해야 하는 메소드
-                            //ResultAlert.alert(this,"ERROR_CARD");
-                            //return true;
+
+                if(!DB.isValid(str)) //TODO: => server 쓰게
+                {
+                    ResultAlert.alert(this,"ERROR_CARD");
+                    return true;
+                }
+                break;
+
             case PASSWORD:  //비밀번호 입력할 때 체크해야 하는 메소드
-                //TODO; 비밀번호 확인할때 체크
-                if(!str.equals(MainFrame.getInstance().getPw()))
+                if(!str.equals(MainFrame.getInstance().getPw()))    //TODO: mainFrame에 저장해놓은 비밀번호와 비교 => 서버 이용하게 바꾸면 된다
                 {
                     ResultAlert.alert(this, "ERROR_PW");
                     return true;
                 }
-
             default: break;
         }
         return false;

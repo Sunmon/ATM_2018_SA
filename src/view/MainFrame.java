@@ -39,30 +39,26 @@ public class MainFrame extends JFrame
 
 
     //데이터베이스 연결과 관련
-    private database DB;
+    private database DB;        //TODO: DB말고 server에 연결되게 바꿀것
+
     private String cardNum = "";     //자신의 카드 번호
     private String otherCardNum = "";   //다른사람 카드 번호
-
-
     private String pw = "";  //자신의 비밀번호
-
-
-
 
 
     //싱글톤 이용한 생성자.
     private static MainFrame instance = new MainFrame();
+
     private MainFrame()
     {
         init();
     }
+
     public static MainFrame getInstance()
     {
-        if ( instance == null ) instance = new MainFrame();
+        if (instance == null) instance = new MainFrame();
         return instance;
     }
-
-
 
 
     //MainFrame 생성시 초기화하는 메소드
@@ -110,25 +106,19 @@ public class MainFrame extends JFrame
     {
         //메뉴 버튼들 눌렀을때 행동 설정
         //현재 화면의 정보. 다음에 나와야 할 화면 정보 설정
-        //TODO: 출금, 송금시 순서 내카드->상대계좌-> 비번->금액으로 바꾸기
-
-        if(e.getSource().equals(depositButton))
+        if (e.getSource().equals(depositButton))
         {
             menu = "DEPOSIT";
             insertCardPanel.setNextMode(Mode.MONEY);
             insertMoneyPanel.setNextMode(Mode.ALERT);
 
-        }
-        else if(e.getSource().equals(withdrawButton))
+        } else if (e.getSource().equals(withdrawButton))
         {
             menu = "WITHDRAW";
             insertCardPanel.setNextMode(Mode.PASSWORD);
             insertPasswordPanel.setNextMode(Mode.MONEY);
             insertMoneyPanel.setNextMode(Mode.ALERT);
-//            insertCardPanel.setNextMode(Mode.MONEY);
-//            insertMoneyPanel.setNextMode(Mode.PASSWORD);
-        }
-        else if(e.getSource().equals(transferButton))
+        } else if (e.getSource().equals(transferButton))
         {
             menu = "TRANSFER";
             insertCardPanel.setNextMode(Mode.TRANSFER);
@@ -145,7 +135,7 @@ public class MainFrame extends JFrame
     //mode : MAIN, CARD, TRANSFER, PASSWORD, MONEY, ALERT 중 하나
     public void changeView(Mode mode)
     {
-        CardLayout c = (CardLayout)mainPanel.getLayout();
+        CardLayout c = (CardLayout) mainPanel.getLayout();
         c.show(mainPanel, mode.name());
     }
 
@@ -156,18 +146,18 @@ public class MainFrame extends JFrame
         insertCardPanel.getTextField().setText("");
         insertTransferPanel.getTextField().setText("");
         insertMoneyPanel.getTextField().setText("");
-        for(JLabel lab : insertPasswordPanel.getJLabelArr())
+        for (JLabel lab : insertPasswordPanel.getJLabelArr())
         {
             lab.setText(" ");
         }
         insertPasswordPanel.getNumberPadPanel().initPointer();
 
-        //rollback
+        //TODO: DB rollback
         DB.rollback();
     }
 
 
-    //DB에서 비밀번호 정보 가져옴
+    //TODO: DB에서 비밀번호 정보 가져옴 => 서버 이용하게 변경할것
     public void setPWInfo()
     {
         String info[] = DB.getInfo(cardNum);

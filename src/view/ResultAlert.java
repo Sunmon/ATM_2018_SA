@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,7 +12,6 @@ public class ResultAlert extends JDialog
     private JButton buttonOK;
     private JLabel msgLabel;
 
-    //TODO: 에러나 상태관련 메세지 enum만들기
     public enum State
     {
         DEPOSIT("입금이 완료되었습니다."),
@@ -23,7 +23,9 @@ public class ResultAlert extends JDialog
         ERROR_EMPTY("항목이 채워지지 않았습니다.");
 
         private String msg;
+
         State(String msg) {this.msg = msg;}
+
         public String getMsg() {return msg;}
     }
 
@@ -45,13 +47,14 @@ public class ResultAlert extends JDialog
     private void onOK()
     {
         MainFrame.getInstance().clearTexts();
-        switch(state)
+        switch (state)
         {
             case DEPOSIT:
             case TRANSFER:
             case WITHDRAW:
                 MainFrame.getInstance().changeView(Mode.MAIN);
-            default: break;
+            default:
+                break;
         }
         dispose();
     }
