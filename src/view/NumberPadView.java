@@ -129,7 +129,6 @@ public class NumberPadView extends JPanel
     //ok버튼 눌렀을 때
     private void onOKButton(String temp)
     {
-        //TODO: 모델과 연동되는 코드 여기 작성.. temp는 현재 유저가 입력한 카드번호. 비밀번호.
         //에러 체크하기
         //입력 제대로 안 되었으면 에러
         if(temp.length() == 0 ||
@@ -200,7 +199,6 @@ public class NumberPadView extends JPanel
                 break;
 
             case PASSWORD:  //비밀번호 입력할 때 체크해야 하는 메소드
-                //FIXME: pw
                 System.out.println("input password: "+str);
                 if(!controller.matchingPw(str))
                 {

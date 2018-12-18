@@ -150,18 +150,11 @@ public class MainFrame extends JFrame
         }
         insertPasswordPanel.getNumberPadPanel().initPointer();
         insertPasswordPanel.getNumberPadPanel().initNarr();
-        //TODO: controller rollback
-//        controller.rollback();
+
     }
 
 
-    //TODO: DB에서 비밀번호 정보 가져옴 => 서버 이용하게 변경할것
-   /* public void setPWInfo()
-    {
-        String info[] = controller.getInfo(cardNum);
-        setPw(info[0]); //pw저장
-    }
-*/
+
 
     public mainController getController()
     {
