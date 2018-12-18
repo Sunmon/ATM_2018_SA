@@ -11,7 +11,7 @@ public class database {
     private Statement stmt = null;
     private PreparedStatement pstmt = null;
 
-    public void connect() {
+    public void connect() {	// DB서버에 접속하기 위한 메서드
         String dbUrl = "jdbc:mysql://117.16.137.108:3306/"
                 + "user_201411140?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8";
         String dbId = "user_201411140";
@@ -25,7 +25,7 @@ public class database {
         }
     }
 
-    public void disconnect() {
+    public void disconnect() {	// 연결되어 있던 stmt 와 pstmt 를 초기화해줌
         if (stmt != null) {
             try {
                 stmt.close();
@@ -43,7 +43,7 @@ public class database {
         }
     }
 
-    public void commit() {
+    public void commit() {	// 현재까지 진행된 쿼리를 커밋함
         String sql = "commit;";
         try {
             pstmt = conn.prepareStatement(sql);
@@ -53,7 +53,7 @@ public class database {
         }
     }
 
-    public void rollback() {
+    public void rollback() {	// 커밋되지 않은 쿼리를 롤백
         String sql = "rollback;";
         try {
             pstmt = conn.prepareStatement(sql);
@@ -63,7 +63,7 @@ public class database {
         }
     }
 
-    public String[] getInfo(String accountId) {
+    public String[] getInfo(String accountId) {		// 초기 카드 입력시 정보조회 목적으로 호출함 (but 실제로는 비밀번호만 사용될듯)
         String sql = "select pw, name, balance from account where id = ?;";
         ResultSet rs;
         String[] info = null;
@@ -82,7 +82,7 @@ public class database {
         return info;
     }
 
-    public boolean isValid(String accountId) {
+    public boolean isValid(String accountId) {		// 계좌정보가 유효한지 확인함
 		String sql = "select id from account where id = ?;";
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -99,7 +99,7 @@ public class database {
 		return false;
 	}
 
-    public void putMoney(String accountId, String money) {
+    public void putMoney(String accountId, String money) {		// 계좌에 돈을 넣음
         String sqlUpdate = "update account set balance = ? where id = ?;";
         String sqlRead = "select balance from account where id = ?;";
         try {
@@ -119,7 +119,7 @@ public class database {
         }
     }
 
-    public boolean getMoney(String accountId, String money) {
+    public boolean getMoney(String accountId, String money) {	// 계좌에서 돈을 뺌
         String sqlUpdate = "update account set balance = ? where id = ?;";
         String sqlRead = "select balance from account where id = ?;";
         try {
@@ -143,6 +143,8 @@ public class database {
         }
         return true;
     }
+	
+    // 이하함수는 balance 를 계산할 때 overflow를 막기 위해 String으로 연산하기 위한 함수들
 
     private boolean isBig(String n1, String n2) { // n1 > n2면 true 리턴.
         if (n1.length() > n2.length())
