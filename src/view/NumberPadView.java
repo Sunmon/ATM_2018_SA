@@ -29,8 +29,7 @@ public class NumberPadView extends JPanel
     IView relatedPanel; //연관된 패널.
 
     private int pointer = 0;
-    private String cardNum;     //자신의 카드 번호
-    private String otherCardNum;    //다른사람의 카드 번호
+
 
     public NumberPadView()
     {
@@ -127,15 +126,12 @@ public class NumberPadView extends JPanel
     }
 
 
+    //TODO: commit 하기
     //ok버튼 눌렀을 때
     private void onOKButton(String temp)
     {
         //TODO: 모델과 연동되는 코드 여기 작성.. temp는 현재 유저가 입력한 카드번호. 비밀번호.
         //에러 체크하기
-
-        //FIXME: temp잘 안 들어오나?
-        System.out.println("onOKButtonMethod: "+ temp);
-
         //입력 제대로 안 되었으면 에러
         if(temp.length() == 0 ||
                 (pointer <4 && relatedPanel.getCurrentMode()==Mode.PASSWORD))
@@ -157,9 +153,6 @@ public class NumberPadView extends JPanel
     {   //TODO: 모델 관련 메소드.. 에러 체크 등등
         //에러가 없으면 false 리턴, 있으면 true 리턴
         //str은 그때그때 달라짐. 카드번호, 비밀번호, 금액 다 가능.
-
-        //FIXME: str잘 안들어왔나?
-        System.out.println("isModel str: "+ str);
         switch(currentMode)
         {
             case CARD : //카드 번호 입력할 때 체크해야 하는 메소드
@@ -168,21 +161,25 @@ public class NumberPadView extends JPanel
                             ResultAlert.alert(this, "ERROR_CARD");
                             return true;
                         }
-                        cardNum = str;
+                        MainFrame.getInstance().setCardNum(str);
+                        MainFrame.getInstance().setPWInfo();
                         break;
             case MONEY: //금액 입력할 때 체크해야 하는 메소드
                 //예금하는 경우
-                if(relatedPanel.getNextMode() == Mode.ALERT)
+                if(MainFrame.getInstance().getMenu().equals("DEPOSIT"))
                 {
-                    DB.putMoney(cardNum, str);
+                    DB.putMoney(MainFrame.getInstance().getCardNum(), str);
                     break;
                 }
                 else    //출금하는 경우
                 {
-                    boolean success = DB.getMoney(cardNum, str);
+                    boolean success = DB.getMoney(MainFrame.getInstance().getCardNum(), str);
                     if(!success)
                     {
-                        ResultAlert.alert(this, "ERROR_MONEY");
+                        //TODO: error 확인
+//                        ResultAlert.alert(this, "ERROR_MONEY");
+                        ResultAlert.alert(this,"ERROR_BALANCE");
+
                         return true;
                     }
                     break;
@@ -191,8 +188,13 @@ public class NumberPadView extends JPanel
                             //ResultAlert.alert(this,"ERROR_CARD");
                             //return true;
             case PASSWORD:  //비밀번호 입력할 때 체크해야 하는 메소드
-                            //ResultAlert.alert(this, "ERROR_PW");
-                            //ResultAlert.alert(this,"ERROR_BALANCE");
+                //TODO; 비밀번호 확인할때 체크
+                if(!str.equals(MainFrame.getInstance().getPw()))
+                {
+                    ResultAlert.alert(this, "ERROR_PW");
+                    return true;
+                }
+
             default: break;
         }
         return false;

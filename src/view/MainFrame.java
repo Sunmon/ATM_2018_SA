@@ -38,8 +38,16 @@ public class MainFrame extends JFrame
     private String menu;
 
 
-    //데이터베이스 연결
+    //데이터베이스 연결과 관련
     private database DB;
+    private String cardNum = "";     //자신의 카드 번호
+    private String otherCardNum = "";   //다른사람 카드 번호
+
+
+    private String pw = "";  //자신의 비밀번호
+
+
+
 
 
     //싱글톤 이용한 생성자.
@@ -102,6 +110,8 @@ public class MainFrame extends JFrame
     {
         //메뉴 버튼들 눌렀을때 행동 설정
         //현재 화면의 정보. 다음에 나와야 할 화면 정보 설정
+        //TODO: 출금, 송금시 순서 내카드->상대계좌-> 비번->금액으로 바꾸기
+
         if(e.getSource().equals(depositButton))
         {
             menu = "DEPOSIT";
@@ -112,18 +122,21 @@ public class MainFrame extends JFrame
         else if(e.getSource().equals(withdrawButton))
         {
             menu = "WITHDRAW";
-            insertCardPanel.setNextMode(Mode.MONEY);
-            insertMoneyPanel.setNextMode(Mode.PASSWORD);
-            insertPasswordPanel.setNextMode(Mode.ALERT);
+            insertCardPanel.setNextMode(Mode.PASSWORD);
+            insertPasswordPanel.setNextMode(Mode.MONEY);
+            insertMoneyPanel.setNextMode(Mode.ALERT);
+//            insertCardPanel.setNextMode(Mode.MONEY);
+//            insertMoneyPanel.setNextMode(Mode.PASSWORD);
         }
         else if(e.getSource().equals(transferButton))
         {
             menu = "TRANSFER";
             insertCardPanel.setNextMode(Mode.TRANSFER);
-            insertTransferPanel.setNextMode(Mode.MONEY);
             insertTransferPanel.setCurrentMode(Mode.TRANSFER);
+            insertTransferPanel.setNextMode(Mode.PASSWORD);
+            insertPasswordPanel.setNextMode(Mode.MONEY);
             insertTransferPanel.getCreditCardNumberLabel().setText("INSERT RECEIVER CARD NU");
-            insertMoneyPanel.setNextMode(Mode.PASSWORD);
+            insertMoneyPanel.setNextMode(Mode.ALERT);
         }
         changeView(Mode.CARD);
     }
@@ -148,6 +161,17 @@ public class MainFrame extends JFrame
             lab.setText(" ");
         }
         insertPasswordPanel.getNumberPadPanel().initPointer();
+
+        //rollback
+        DB.rollback();
+    }
+
+
+    //DB에서 비밀번호 정보 가져옴
+    public void setPWInfo()
+    {
+        String info[] = DB.getInfo(cardNum);
+        setPw(info[0]); //pw저장
     }
 
     public database getDB()
@@ -163,6 +187,37 @@ public class MainFrame extends JFrame
     public String getMenu()
     {
         return menu;
+    }
+
+    public String getCardNum()
+    {
+        return cardNum;
+    }
+
+    public void setCardNum(String cardNum)
+    {
+        this.cardNum = cardNum;
+    }
+
+
+    public String getOtherCardNum()
+    {
+        return otherCardNum;
+    }
+
+    public void setOtherCardNum(String otherCardNum)
+    {
+        this.otherCardNum = otherCardNum;
+    }
+
+    public String getPw()
+    {
+        return pw;
+    }
+
+    public void setPw(String pw)
+    {
+        this.pw = pw;
     }
 
 }

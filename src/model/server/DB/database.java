@@ -105,6 +105,8 @@ public class database {
         try {
             pstmt = conn.prepareStatement(sqlRead);
             pstmt.setString(1, accountId);
+
+
             ResultSet rs = pstmt.executeQuery();
             rs.next();
             String balance = rs.getString(1);
