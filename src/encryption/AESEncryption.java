@@ -1,7 +1,9 @@
-package model.encryption;
+package encryption;
+
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -9,6 +11,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 public class AESEncryption {
+
 
     public byte[] encrypt(String target,Cipher cipher, SecretKeySpec secretKeySpec) throws NoSuchAlgorithmException
             , NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException
@@ -29,7 +32,9 @@ public class AESEncryption {
         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
         byte[] decryptBytes = cipher.doFinal(encryptBytes);
         decodingStr=new String(decryptBytes,"UTF-8");
+
         return decodingStr;
     }
 
 }
+

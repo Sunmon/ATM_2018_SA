@@ -1,5 +1,5 @@
 package view;
-import model.server.DB.database;
+import controller.mainController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,7 +39,7 @@ public class MainFrame extends JFrame
 
 
     //데이터베이스 연결과 관련
-    private database DB;        //TODO: DB말고 server에 연결되게 바꿀것
+    private mainController controller;        //TODO: DB말고 server에 연결되게 바꿀것
 
     private String cardNum = "";     //자신의 카드 번호
     private String otherCardNum = "";   //다른사람 카드 번호
@@ -152,26 +152,27 @@ public class MainFrame extends JFrame
         }
         insertPasswordPanel.getNumberPadPanel().initPointer();
 
-        //TODO: DB rollback
-        DB.rollback();
+        //TODO: controller rollback
+//        controller.rollback();
     }
 
 
     //TODO: DB에서 비밀번호 정보 가져옴 => 서버 이용하게 변경할것
-    public void setPWInfo()
+   /* public void setPWInfo()
     {
-        String info[] = DB.getInfo(cardNum);
+        String info[] = controller.getInfo(cardNum);
         setPw(info[0]); //pw저장
     }
+*/
 
-    public database getDB()
+    public mainController getController()
     {
-        return DB;
+        return controller;
     }
 
-    public void setDB(database DB)
+    public void setController(mainController controller)
     {
-        this.DB = DB;
+        this.controller = controller;
     }
 
     public String getMenu()

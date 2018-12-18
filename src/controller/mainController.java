@@ -1,17 +1,11 @@
 
 package controller;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.StringTokenizer;
 
-import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
-
 import network.client;
-import encryption.AESEncryption;
 
-    public class mainController {
+public class mainController {
         private static final int INIT = 0, DIPOSIT = 1, WITHDRAW = 2, TRANSFER = 3; // for type
         private client client;
         private String accountId;

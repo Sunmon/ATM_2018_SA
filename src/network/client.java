@@ -1,25 +1,14 @@
 package network;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.Socket;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.StringTokenizer;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-import encryption.AESEncryption;
+import encryption.proxyAESEncryption;
 
 public class client {
     private static final int INIT = 0, DIPOSIT = 1, WITHDRAW = 2, TRANSFER = 3; // for type
@@ -27,14 +16,14 @@ public class client {
     private DataInputStream dIn;
     private DataOutputStream dOut;
     private String servAddr;
-    private AESEncryption Aes;
+    private proxyAESEncryption Aes;
     private String encryptionKey;
     private Cipher cipher;
     private SecretKeySpec secretKeySpec;
 
     public client(String servAddr) {
         this.servAddr = servAddr;
-        this.Aes = new AESEncryption();
+        this.Aes = new proxyAESEncryption();
         this.encryptionKey = "ThisIsSecretKey!";
         this.secretKeySpec = new SecretKeySpec(encryptionKey.getBytes(), "AES");
         try {

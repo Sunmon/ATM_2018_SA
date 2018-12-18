@@ -1,5 +1,4 @@
 package view;
-import model.server.DB.database;
 
 public class ViewMain
 {

@@ -1,6 +1,7 @@
 package view;
 
-import model.server.DB.database;
+
+import controller.mainController;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -135,7 +136,7 @@ public class NumberPadView extends JPanel
             ResultAlert.alert(this, "ERROR_EMPTY");
 
         //그 외 상황별 에러 체크
-        else if(IsModelError(relatedPanel.getCurrentMode(), temp, MainFrame.getInstance().getDB())) return;
+        else if(IsModelError(relatedPanel.getCurrentMode(), temp, MainFrame.getInstance().getController())) return;
 
         //모든 트랜젝션 끝이면 알람 띄우기
         else if(relatedPanel.getNextMode()==Mode.ALERT)
@@ -146,7 +147,7 @@ public class NumberPadView extends JPanel
     }
 
 
-    private boolean IsModelError(Mode currentMode, String str, database DB)
+    private boolean IsModelError(Mode currentMode, String str, mainController controller)
     {   //TODO: 모델 관련 메소드.. 에러 체크 등등
         //에러가 없으면 false 리턴, 있으면 true 리턴
         //str은 그때그때 달라짐. 카드번호, 비밀번호, 금액 다 가능.
@@ -154,7 +155,7 @@ public class NumberPadView extends JPanel
         {
             case CARD : //카드 번호 입력할 때 체크해야 하는 메소드
 
-                    if(!DB.isValid(str))    //카드 유효한지 검사   => //TODO: if(!DB.isValid(str))만 서버에 맞도록 고치면 된다
+                    if(!controller.isValid(str))    //카드 유효한지 검사   => //TODO: if(!DB.isValid(str))만 서버에 맞도록 고치면 된다
                         {   //안 유효하다면 에러띄우가
                             ResultAlert.alert(this, "ERROR_CARD");
                             return true;
@@ -162,7 +163,8 @@ public class NumberPadView extends JPanel
 
                         //카드번호 GUI에서 쓸 수 있게 임시 저장
                         MainFrame.getInstance().setCardNum(str);
-                        MainFrame.getInstance().setPWInfo();
+
+//                        MainFrame.getInstance().setPWInfo();
                         break;
 
 
@@ -170,12 +172,15 @@ public class NumberPadView extends JPanel
                 //예금하는 경우
                 if(MainFrame.getInstance().getMenu().equals("DEPOSIT"))
                 {
-                    DB.putMoney(MainFrame.getInstance().getCardNum(), str); //TODO: 여기도 서버 이용하게 바꾸면 된다
+//                    controller.putMoney(MainFrame.getInstance().getCardNum(), str);
+                    controller.diposit(str); //TODO: 여기도 서버 이용하게 바꾸면 된다
                     break;
                 }
                 else    //출금하는 경우
                 {
-                    boolean success = DB.getMoney(MainFrame.getInstance().getCardNum(), str);   //TODO: 여기도 서버로
+//                    boolean success = controller.getMoney(MainFrame.getInstance().getCardNum(), str);   //TODO: 여기도 서버로
+                    boolean success = true;
+//                    controller.getMoney(MainFrame.getInstance().getCardNum(), str);   //TODO: 여기도 서버로
                     if(!success)
                     {
                         ResultAlert.alert(this,"ERROR_BALANCE");
@@ -184,8 +189,7 @@ public class NumberPadView extends JPanel
                     break;
                 }
             case TRANSFER: //송금받을 카드 번호 입력할 때 체크해야 하는 메소드
-
-                if(!DB.isValid(str)) //TODO: => server 쓰게
+                if(!controller.isValid(str)) //TODO: => server 쓰게
                 {
                     ResultAlert.alert(this,"ERROR_CARD");
                     return true;
@@ -193,7 +197,7 @@ public class NumberPadView extends JPanel
                 break;
 
             case PASSWORD:  //비밀번호 입력할 때 체크해야 하는 메소드
-                if(!str.equals(MainFrame.getInstance().getPw()))    //TODO: mainFrame에 저장해놓은 비밀번호와 비교 => 서버 이용하게 바꾸면 된다
+                if(!controller.matchingPw(str))
                 {
                     ResultAlert.alert(this, "ERROR_PW");
                     return true;

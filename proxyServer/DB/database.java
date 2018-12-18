@@ -1,4 +1,5 @@
-package model.server.DB;
+package DB;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,7 +12,7 @@ public class database {
     private Statement stmt = null;
     private PreparedStatement pstmt = null;
 
-    public void connect() {	// DB서버에 접속하기 위한 메서드
+    public void connect() {
         String dbUrl = "jdbc:mysql://117.16.137.108:3306/"
                 + "user_201411140?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8";
         String dbId = "user_201411140";
@@ -25,7 +26,7 @@ public class database {
         }
     }
 
-    public void disconnect() {	// 연결되어 있던 stmt 와 pstmt 를 초기화해줌
+    public void disconnect() {
         if (stmt != null) {
             try {
                 stmt.close();
@@ -36,14 +37,13 @@ public class database {
         if (pstmt != null) {
             try {
                 pstmt.close();
-
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void commit() {	// 현재까지 진행된 쿼리를 커밋함
+    public void commit() {
         String sql = "commit;";
         try {
             pstmt = conn.prepareStatement(sql);
@@ -53,7 +53,7 @@ public class database {
         }
     }
 
-    public void rollback() {	// 커밋되지 않은 쿼리를 롤백
+    public void rollback() {
         String sql = "rollback;";
         try {
             pstmt = conn.prepareStatement(sql);
@@ -63,7 +63,7 @@ public class database {
         }
     }
 
-    public String[] getInfo(String accountId) {		// 초기 카드 입력시 정보조회 목적으로 호출함 (but 실제로는 비밀번호만 사용될듯)
+    public String[] getInfo(String accountId) {
         String sql = "select pw, name, balance from account where id = ?;";
         ResultSet rs;
         String[] info = null;
@@ -82,31 +82,29 @@ public class database {
         return info;
     }
 
-    public boolean isValid(String accountId) {		// 계좌정보가 유효한지 확인함. 유효하면 true
-		String sql = "select id from account where id = ?;";
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, accountId);
-			ResultSet rs = pstmt.executeQuery();
-			if (rs.next()) {
-				System.out.println(accountId + " is valid account");
-				return true;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println(accountId + " is invalid account");
-		return false;
-	}
+    public boolean isValid(String accountId) {
+        String sql = "select id from account where id = ?;";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, accountId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                System.out.println(accountId + " is valid account");
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(accountId + " is invalid account");
+        return false;
+    }
 
-    public void putMoney(String accountId, String money) {		// 계좌에 돈을 넣음
+    public boolean putMoney(String accountId, String money) {
         String sqlUpdate = "update account set balance = ? where id = ?;";
         String sqlRead = "select balance from account where id = ?;";
         try {
             pstmt = conn.prepareStatement(sqlRead);
             pstmt.setString(1, accountId);
-
-
             ResultSet rs = pstmt.executeQuery();
             rs.next();
             String balance = rs.getString(1);
@@ -118,10 +116,12 @@ public class database {
             System.out.println("put into " + accountId + " money ( " + money + " )\tbalance = " + balance);
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
-    public boolean getMoney(String accountId, String money) {	// 계좌에서 돈을 뺌
+    public boolean getMoney(String accountId, String money) {
         String sqlUpdate = "update account set balance = ? where id = ?;";
         String sqlRead = "select balance from account where id = ?;";
         try {
@@ -145,8 +145,6 @@ public class database {
         }
         return true;
     }
-	
-    // 이하함수는 balance 를 계산할 때 overflow를 막기 위해 String으로 연산하기 위한 함수들
 
     private boolean isBig(String n1, String n2) { // n1 > n2면 true 리턴.
         if (n1.length() > n2.length())
