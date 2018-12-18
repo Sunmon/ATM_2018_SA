@@ -23,4 +23,9 @@ public class testMain {
         }
     }
 
+
+    //NOTE: GUI TEST
+    mainController cont = new mainController();
+    
+
 }

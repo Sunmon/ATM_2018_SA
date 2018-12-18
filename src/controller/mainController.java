@@ -18,6 +18,7 @@ public class mainController {
         this.name = null;
     }
 
+    //카드번호 검사해서 유효하면 true리턴
     public boolean isValid(String accountId) {
         this.accountId = accountId;
         if(client.connect()) {
@@ -39,6 +40,7 @@ public class mainController {
         return true;
     }
 
+    //비번맞으면 true, 틀리면 false
     public boolean matchingPw(String pw) {
         if(this.pw.equals(pw)) {
             return true;
