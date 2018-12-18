@@ -8,7 +8,7 @@ public class testMain {
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
-        mainController controll = new mainController("127.0.0.1");
+       /* mainController controll = new mainController("127.0.0.1");
         if(controll.isValid("111111111")) {
             System.out.println("good");
             if(controll.diposit("5000")) {
@@ -40,16 +40,17 @@ public class testMain {
         }else {
             System.out.println("very very good!!");
         }
+*/
 
+       //TODO: GUI test
 
-       /* //TODO: GUI test
         mainController controll = new mainController("127.0.0.1");
         MainFrame mf = MainFrame.getInstance();
         mf.setController(controll);
         mf.setVisible(true);
 
         //메인메뉴 띄우기
-        mf.changeView(Mode.MAIN);*/
+        mf.changeView(Mode.MAIN);
     }
 
 

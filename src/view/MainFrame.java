@@ -48,12 +48,10 @@ public class MainFrame extends JFrame
 
     //싱글톤 이용한 생성자.
     private static MainFrame instance = new MainFrame();
-
     private MainFrame()
     {
         init();
     }
-
     public static MainFrame getInstance()
     {
         if (instance == null) instance = new MainFrame();
@@ -151,7 +149,7 @@ public class MainFrame extends JFrame
             lab.setText(" ");
         }
         insertPasswordPanel.getNumberPadPanel().initPointer();
-
+        insertPasswordPanel.getNumberPadPanel().initNarr();
         //TODO: controller rollback
 //        controller.rollback();
     }

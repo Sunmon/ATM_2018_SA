@@ -30,7 +30,8 @@ public class NumberPadView extends JPanel
     IView relatedPanel; //연관된 패널.
 
     private int pointer = 0;
-
+    private int[] narr = new int[4];    //비밀번호 저장
+    private String money = "";      //입력한 돈 저장
 
     public NumberPadView()
     {
@@ -148,14 +149,14 @@ public class NumberPadView extends JPanel
 
 
     private boolean IsModelError(Mode currentMode, String str, mainController controller)
-    {   //TODO: 모델 관련 메소드.. 에러 체크 등등
+    {
         //에러가 없으면 false 리턴, 있으면 true 리턴
         //str은 그때그때 달라짐. 카드번호, 비밀번호, 금액 다 가능.
         switch(currentMode)
         {
             case CARD : //카드 번호 입력할 때 체크해야 하는 메소드
 
-                    if(!controller.isValid(str))    //카드 유효한지 검사   => //TODO: if(!DB.isValid(str))만 서버에 맞도록 고치면 된다
+                    if(!controller.isValid(str))    //카드 유효한지 검사
                         {   //안 유효하다면 에러띄우가
                             ResultAlert.alert(this, "ERROR_CARD");
                             return true;
@@ -163,8 +164,6 @@ public class NumberPadView extends JPanel
 
                         //카드번호 GUI에서 쓸 수 있게 임시 저장
                         MainFrame.getInstance().setCardNum(str);
-
-//                        MainFrame.getInstance().setPWInfo();
                         break;
 
 
@@ -172,24 +171,28 @@ public class NumberPadView extends JPanel
                 //예금하는 경우
                 if(MainFrame.getInstance().getMenu().equals("DEPOSIT"))
                 {
-//                    controller.putMoney(MainFrame.getInstance().getCardNum(), str);
-                    controller.diposit(str); //TODO: 여기도 서버 이용하게 바꾸면 된다
+                    controller.diposit(str);
                     break;
                 }
-                else    //출금하는 경우
+                else //출금, 송금하는 경우
                 {
-//                    boolean success = controller.getMoney(MainFrame.getInstance().getCardNum(), str);   //TODO: 여기도 서버로
-                    boolean success = true;
-//                    controller.getMoney(MainFrame.getInstance().getCardNum(), str);   //TODO: 여기도 서버로
-                    if(!success)
+                    money = str;
+                    System.out.println("input money to send: "+ str);
+                    if(Long.parseLong(controller.getBalance())< Integer.parseInt(str))
                     {
                         ResultAlert.alert(this,"ERROR_BALANCE");
                         return true;
                     }
+                    if(MainFrame.getInstance().getMenu().equals("WITHDRAW"))
+                    {
+                        controller.withdraw(str);
+                        break;
+                    }
+                    else controller.transfer(MainFrame.getInstance().getCardNum(), str);
                     break;
                 }
             case TRANSFER: //송금받을 카드 번호 입력할 때 체크해야 하는 메소드
-                if(!controller.isValid(str)) //TODO: => server 쓰게
+                if(!controller.isValid(str))
                 {
                     ResultAlert.alert(this,"ERROR_CARD");
                     return true;
@@ -197,6 +200,8 @@ public class NumberPadView extends JPanel
                 break;
 
             case PASSWORD:  //비밀번호 입력할 때 체크해야 하는 메소드
+                //FIXME: pw
+                System.out.println("input password: "+str);
                 if(!controller.matchingPw(str))
                 {
                     ResultAlert.alert(this, "ERROR_PW");
@@ -271,9 +276,10 @@ public class NumberPadView extends JPanel
                 pointer = onDeleteButton(larr, pointer);
                 break;
             case 11:    //OK button
-                for(JLabel label: larr)
+                //그냥 숫자들로 저장. 라벨은 *임
+                for(int i=0; i<4; i++)
                 {
-                    temp.append(label.getText());
+                    temp.append(Integer.toString(narr[i]));
                 }
                 onOKButton(temp.toString());
                 return;
@@ -294,6 +300,7 @@ public class NumberPadView extends JPanel
     {
         for(JLabel label : larr)
             label.setText(" ");
+        initNarr();
         return 0;
     }
 
@@ -303,6 +310,7 @@ public class NumberPadView extends JPanel
         if(pointer > 3) return pointer;
         System.out.println(pointer);
         larr[pointer].setText("*");
+        narr[pointer] = but;
         return pointer+1;
     }
 
@@ -312,27 +320,28 @@ public class NumberPadView extends JPanel
     {
         if(pointer == 0) return pointer;
         larr[--pointer].setText(" ");
+        narr[pointer] = -1;
         return pointer;
     }
-
-
     public JButton getManButton()
     {
         return manButton;
     }
-
     public JTextField getTextField()
     {
         return textField;
     }
-
     public static void setTextField(JTextField textField)
     {
         textField = textField;
     }
-
     public void initPointer()
     {
         pointer = 0;
+    }
+    public void initNarr()
+    {
+        for(int i=0; i<4; i++)
+            narr[i] = -1;
     }
 }

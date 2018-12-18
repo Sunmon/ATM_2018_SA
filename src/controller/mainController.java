@@ -1,10 +1,7 @@
 
 package controller;
-
 import java.util.StringTokenizer;
-
 import network.client;
-
 public class mainController {
         private static final int INIT = 0, DIPOSIT = 1, WITHDRAW = 2, TRANSFER = 3; // for type
         private client client;
@@ -43,6 +40,7 @@ public class mainController {
             return true;
         }
 
+        //비밀번호 일치하면 true, 틀리면 false
         public boolean matchingPw(String pw) {
             if(this.pw.equals(pw)) {
                 return true;
