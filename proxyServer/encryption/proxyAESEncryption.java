@@ -3,17 +3,13 @@ package encryption;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
-
 public class proxyAESEncryption
 {
-
-
     public byte[] encrypt(String target,Cipher cipher, SecretKeySpec secretKeySpec) throws NoSuchAlgorithmException
             , NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException
             , BadPaddingException, UnsupportedEncodingException
@@ -33,7 +29,6 @@ public class proxyAESEncryption
         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
         byte[] decryptBytes = cipher.doFinal(encryptBytes);
         decodingStr=new String(decryptBytes,"UTF-8");
-
         return decodingStr;
     }
 
