@@ -177,7 +177,7 @@ public class NumberPadView extends JPanel
                 {
                     money = str;
                     System.out.println("input money to send: "+ str);
-                    if(Long.parseLong(controller.getBalance())< Integer.parseInt(str))
+                    if(Long.parseLong(controller.getBalance())< Long.parseLong(str))
                     {
                         ResultAlert.alert(this,"ERROR_BALANCE");
                         return true;
