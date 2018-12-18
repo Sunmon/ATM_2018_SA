@@ -83,21 +83,21 @@ public class database {
     }
 
     public boolean isValid(String accountId) {
-        String sql = "select id from account where id = ?;";
-        try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, accountId);
-            int valid = pstmt.executeUpdate();
-            if (valid > 0) {
-                System.out.println(accountId + " is valid account");
-                return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println(accountId + " is invalid account");
-        return false;
-    }
+		String sql = "select id from account where id = ?;";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, accountId);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				System.out.println(accountId + " is valid account");
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(accountId + " is invalid account");
+		return false;
+	}
 
     public void putMoney(String accountId, String money) {
         String sqlUpdate = "update account set balance = ? where id = ?;";
