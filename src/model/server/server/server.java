@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
 
 import DB.database;
 
-public class server {
+public class server {	// 실제 서비스를 담당하지 않음 -> 접속을 요청하는 client 마다 한번의 서비스를 수행할 수 있는 스레드를 생성해줌
 	private ServerSocket serverSock;
 
 	public server() {
@@ -31,6 +31,7 @@ public class server {
 	}
 }
 
+// 실제 서비스를 수행하는 스레드
 class DBThread extends Thread {
 	private static final int INIT = 0, DIPOSIT = 1, WITHDRAW = 2, TRANSFER = 3; // for type
 	private Socket sock;
@@ -50,12 +51,12 @@ class DBThread extends Thread {
 		}
 	}
 
-	public void run() {
+	public void run() {	// 서비스 수행
 		String msg = null;
 		int type;
 		String accountFrom, accountTo, money;
 		try {
-			msg = br.readLine();
+			msg = br.readLine();	// 예상되는 msg = type/account1/account2/money or type/account/money
 			if (msg == null) {
 				return;
 			}
@@ -68,18 +69,18 @@ class DBThread extends Thread {
 			accountFrom = st.nextToken();
 			db.connect();
 			db.rollback();
-			if (db.isValid(accountFrom)) {
-				switch (type) {
-				case INIT:
+			if (db.isValid(accountFrom)) {	// 계좌정보가 valid하다면
+				switch (type) {	// type 에 따라 서비스 수행
+				case INIT:	// 기본정보 요구
 					String[] info = db.getInfo(accountFrom);
 					sendMsg(info);
 					break;
-				case DIPOSIT:
+				case DIPOSIT:	// 입금
 					money = st.nextToken();
 					db.putMoney(accountFrom, money);
 					sendMsg(ack);
 					break;
-				case WITHDRAW:
+				case WITHDRAW:	// 출금
 					money = st.nextToken();
 					if (db.getMoney(accountFrom, money)) {
 						sendMsg(ack);
@@ -87,7 +88,7 @@ class DBThread extends Thread {
 						sendMsg(nack); // 잔액부족
 					}
 					break;
-				case TRANSFER:
+				case TRANSFER:	// 해당계좌로부터 다른 계좌 송금
 					accountTo = st.nextToken();
 					if (db.isValid(accountTo)) {
 						money = st.nextToken();
@@ -97,14 +98,14 @@ class DBThread extends Thread {
 						} else {
 							sendMsg(nack);
 						}
-					} else {
+					} else {	// 받는 계좌정보가 valid하지 않음
 						String[] error = new String[0];
 						error[0] = "account is invalid (2)";
 						sendMsg(error);
 					}
 					break;
 				}
-			} else {
+			} else {	// 계좌정보가 valid 하지 않을떄 에러 메세지 발생
 				String[] error = new String[0];
 				error[0] = "account is invalid (1)";
 				sendMsg(error);
