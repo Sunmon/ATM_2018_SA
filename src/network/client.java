@@ -33,6 +33,11 @@ public class client {
             e.printStackTrace();
         }
     }
+    
+    public static client getInstance(String servAddr){
+        if(instance == null) instance = new client(servAddr);
+        return instance;
+    }
 
     public boolean connect() {
         this.sock = null;
