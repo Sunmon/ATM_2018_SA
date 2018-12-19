@@ -12,7 +12,7 @@ public class mainController {
 
 
         public mainController(String servAddr) {
-            this.client = new client(servAddr);
+            this.client = getInstance(servAddr);
             this.accountId = null;
             this.balance = null;
             this.pw = null;
