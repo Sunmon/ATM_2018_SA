@@ -21,7 +21,7 @@ public class client {
     private Cipher cipher;
     private SecretKeySpec secretKeySpec;
 
-    public client(String servAddr) {
+    private client(String servAddr) {
         this.servAddr = servAddr;
         this.Aes = new proxyAESEncryption();
         this.encryptionKey = "ThisIsSecretKey!";
